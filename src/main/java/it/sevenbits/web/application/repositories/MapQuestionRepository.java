@@ -46,8 +46,9 @@ public class MapQuestionRepository implements IQuestionRepository {
             list.add(correctAnswer);
             list.add(new Answer(UUID.randomUUID().toString(), "Answer2", 0));
             list.add(new Answer(UUID.randomUUID().toString(), "Answer3", 0));
-            questionsMap.put(UUID.randomUUID().toString(),
-                    new Question(UUID.randomUUID().toString(),
+            UUID uuid = UUID.randomUUID();
+            questionsMap.put(uuid.toString(),
+                    new Question(uuid.toString(),
                             "Question " + i,
                             list,
                             correctAnswer));
