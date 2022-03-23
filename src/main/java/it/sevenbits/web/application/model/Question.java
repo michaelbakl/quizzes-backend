@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class Question {
-    private int id;
+    private String id;
     private String content;
     List<Answer> answers;
     private Answer correctAnswer;
 
     @JsonCreator
-    public Question(@JsonProperty("id") int id,
+    public Question(@JsonProperty("id") String id,
                     @JsonProperty("content")String content,
                     @JsonProperty("answers") List<Answer> answers,
                     @JsonProperty("correctAnswer")Answer correctAnswer)
@@ -23,12 +23,8 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getContent() {

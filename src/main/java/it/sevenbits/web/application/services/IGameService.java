@@ -6,7 +6,7 @@ import it.sevenbits.web.application.model.Question;
 
 public interface IGameService {
     StartGameDtoResponse startGame();
-    Question getQuestion(int id);
-    SendAnswerDtoResponse sendAnswer(int questionId, int answerID);
-    void validateAnswer(int id);
+    Question getQuestion(String id);
+    SendAnswerDtoResponse sendAnswer(String questionId, String answerID);
+    void validateAnswer(String id);
 }

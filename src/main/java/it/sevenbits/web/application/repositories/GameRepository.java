@@ -3,15 +3,10 @@ package it.sevenbits.web.application.repositories;
 import it.sevenbits.web.application.model.Game;
 
 public class GameRepository implements IGameRepository {
-    private static final GameRepository INSTANCE = new GameRepository();
     private Game game;
 
-    private GameRepository() {
+    public GameRepository() {
         game = new Game(10);
-    }
-
-    public static GameRepository getRepository() {
-        return INSTANCE;
     }
 
     @Override
@@ -30,12 +25,12 @@ public class GameRepository implements IGameRepository {
     }
 
     @Override
-    public int getIdOfCurrentQuestion() {
-        return game.getCurrentId();
+    public String getIdOfCurrentQuestion() {
+        return game.getCurrentQuestionId();
     }
 
     @Override
-    public int getNextQuestionId() {
+    public String getNextQuestionId() {
         return game.getNextId();
     }
 }

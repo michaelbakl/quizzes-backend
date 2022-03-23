@@ -1,5 +1,7 @@
 package it.sevenbits.web.application.controllers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import it.sevenbits.web.application.dto.responses.AnswerQuestionRequest;
 import it.sevenbits.web.application.dto.responses.SendAnswerDtoResponse;
 import it.sevenbits.web.application.dto.responses.StartGameDtoResponse;
 import it.sevenbits.web.application.model.Question;
@@ -11,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/game")
+@RequestMapping("/rooms/1/game")
 public class GameController {
     private final IGameService gameService;
 
@@ -22,26 +24,22 @@ public class GameController {
     @RequestMapping("/start")
     ResponseEntity<StartGameDtoResponse> startGame() {
         StartGameDtoResponse response = gameService.startGame();
-        URI location = UriComponentsBuilder.fromPath("/game/")
-                .path(String.valueOf(response.questionId))
-                .build().toUri();
-        return ResponseEntity.created(location).body(response);
+        return ResponseEntity.ok().body(response);
     }
+
     @RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Question getQuestion(@PathVariable("id") int id) {
+    public Question getQuestion(@PathVariable("id") String id) {
         return gameService.getQuestion(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/questions/{id}/answer", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<SendAnswerDtoResponse> sendAnswer(int questionId, int answerId) {
-        gameService.sendAnswer(questionId, answerId);
-        SendAnswerDtoResponse response = gameService.sendAnswer(questionId, answerId);
-        URI location = UriComponentsBuilder.fromPath("/game/")
-                .path(String.valueOf(response.nextQuestionId))
-                .build().toUri();
-        return ResponseEntity.created(location).body(response);
+    public ResponseEntity<SendAnswerDtoResponse> sendAnswer(@JsonProperty("id") String questionId,
+                                                            @RequestBody AnswerQuestionRequest answerQuestionRequest) {
+        gameService.sendAnswer(questionId, answerQuestionRequest.getId());
+        SendAnswerDtoResponse response = gameService.sendAnswer(questionId, answerQuestionRequest.getId());
+        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping("/hello")

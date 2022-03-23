@@ -5,9 +5,9 @@ import it.sevenbits.web.application.model.Question;
 import java.util.List;
 
 public interface IQuestionRepository {
-    Question getQuestion(int id);
+    Question getQuestion(String id);
     Question getRandomQuestion();
     List<Question> getListOfRandomQuestion(int size);
-    List<Integer> getListOfRandomQuestionsIds(int size);
+    List<String> getListOfRandomQuestionsIds(int size);
 
 }

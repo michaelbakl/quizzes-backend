@@ -1,17 +1,17 @@
 package it.sevenbits.web.application.dto.responses;
 
 public class StartGameDtoResponse {
-    public int questionId;
+    public String questionId;
 
-    public StartGameDtoResponse(int questionId) {
+    public StartGameDtoResponse(String questionId) {
         this.questionId = questionId;
     }
 
-    public int getQuestionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(int questionId) {
+    public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
 }

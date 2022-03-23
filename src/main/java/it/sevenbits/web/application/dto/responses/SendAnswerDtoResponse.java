@@ -3,9 +3,9 @@ package it.sevenbits.web.application.dto.responses;
 public class SendAnswerDtoResponse {
     public int result;
     public int score;
-    public int nextQuestionId;
+    public String nextQuestionId;
 
-    public SendAnswerDtoResponse(int result, int score, int nextQuestionId) {
+    public SendAnswerDtoResponse(int result, int score, String nextQuestionId) {
         this.result = result;
         this.score = score;
         this.nextQuestionId = nextQuestionId;
@@ -27,11 +27,8 @@ public class SendAnswerDtoResponse {
         this.score = score;
     }
 
-    public int getNextQuestionId() {
+    public String getNextQuestionId() {
         return nextQuestionId;
     }
 
-    public void setNextQuestionId(int nextQuestionId) {
-        this.nextQuestionId = nextQuestionId;
-    }
 }

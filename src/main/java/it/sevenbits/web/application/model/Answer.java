@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Answer {
-    private int id;
+    private String id;
     private String content;
     private int points;
 
     @JsonCreator
-    public Answer(@JsonProperty("id") final int id,
+    public Answer(@JsonProperty("id") final String id,
                   @JsonProperty("content") final String content,
                   @JsonProperty("points")final int points)
     {
@@ -18,7 +18,7 @@ public class Answer {
         this.points = points;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -30,7 +30,7 @@ public class Answer {
         return points;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

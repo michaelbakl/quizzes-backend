@@ -6,28 +6,28 @@ import java.util.List;
 public class Game {
     private int score;
     private int questionsAmount;
-    private List<Integer> questionsIds;
-    private int currentId;
+    private List<String> questionsIds;
+    private int currentIdPos;
 
-    public Game(int score, int questionsAmount, List<Integer> questionsIds) {
+    public Game(int score, int questionsAmount, List<String> questionsIds) {
         this.score = score;
         this.questionsAmount = questionsAmount;
         this.questionsIds = questionsIds;
-        currentId = questionsIds.get(0);
+        currentIdPos = 0;
     }
 
     public Game(int score, int questionsAmount) {
         this.score = score;
         this.questionsAmount = questionsAmount;
         questionsIds = new ArrayList<>();
-        currentId = 0;
+        currentIdPos = 0;
     }
 
     public Game(int questionsAmount) {
         score = 0;
         this.questionsAmount = questionsAmount;
         questionsIds = new ArrayList<>();
-        currentId = 0;
+        currentIdPos = 0;
     }
 
     public int getScore() {
@@ -46,27 +46,27 @@ public class Game {
         this.questionsAmount = questionsAmount;
     }
 
-    public List<Integer> getQuestionsIds() {
+    public List<String> getQuestionsIds() {
         return questionsIds;
     }
 
-    public void setQuestionsIds(List<Integer> questionsIds) {
+    public void setQuestionsIds(List<String> questionsIds) {
         this.questionsIds = questionsIds;
     }
 
-    public int getCurrentId() {
-        return currentId;
+    public String getCurrentQuestionId() {
+        return questionsIds.get(currentIdPos);
     }
 
-    public void setCurrentId(int currentId) {
-        this.currentId = currentId;
+    public void setCurrentId(int idPos) {
+        currentIdPos = idPos;
     }
 
-    public int getNextId(){
-        currentId++;
-        if (currentId < questionsAmount) {
-            return questionsIds.get(currentId);
+    public String getNextId(){
+        currentIdPos++;
+        if (currentIdPos < questionsAmount) {
+            return questionsIds.get(currentIdPos);
         }
-        else return -1;
+        else return "";
     }
 }

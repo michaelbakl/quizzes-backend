@@ -6,6 +6,6 @@ public interface IGameRepository {
     Game getGame();
     void updateGameScore(int score);
     int getGameScore();
-    int getIdOfCurrentQuestion();
-    int getNextQuestionId();
+    String getIdOfCurrentQuestion();
+    String getNextQuestionId();
 }

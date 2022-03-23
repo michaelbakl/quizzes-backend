@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Configuration;
 public class RepositoryConfig {
     @Bean
     public IGameRepository gameRepository() {
-        return GameRepository.getRepository();
+        return new GameRepository();
     }
 
     @Bean
     public IQuestionRepository questionRepository() {
-        return MapQuestionRepository.getRepository();
+        return new MapQuestionRepository();
     }
 }

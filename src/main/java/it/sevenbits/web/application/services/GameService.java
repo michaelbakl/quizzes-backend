@@ -11,6 +11,10 @@ public class GameService implements IGameService {
     private IGameRepository gameRepository;
     private IQuestionRepository questionRepository;
 
+    public GameService(IGameRepository gameRepository, IQuestionRepository questionRepository) {
+        this.gameRepository = gameRepository;
+        this.questionRepository = questionRepository;
+    }
 
     @Override
     public StartGameDtoResponse startGame() {
@@ -18,17 +22,17 @@ public class GameService implements IGameService {
         game.setScore(0);
         game.setQuestionsIds(questionRepository.getListOfRandomQuestionsIds(10));
         game.setQuestionsAmount(10);
-        game.setCurrentId(game.getQuestionsIds().get(0));
-        return new StartGameDtoResponse(game.getCurrentId());
+        game.setCurrentId(0);
+        return new StartGameDtoResponse(game.getCurrentQuestionId());
     }
 
     @Override
-    public Question getQuestion(int id) {
+    public Question getQuestion(String id) {
         return questionRepository.getQuestion(id);
     }
 
     @Override
-    public SendAnswerDtoResponse sendAnswer(int questionId, int answerID) {
+    public SendAnswerDtoResponse sendAnswer(String questionId, String answerID) {
         int result = 0;
         if (checkAnswerCorrect(questionId, answerID)) {
             result = 1;
@@ -43,11 +47,11 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void validateAnswer(int id) {
+    public void validateAnswer(String id) {
 
     }
 
-    private boolean checkAnswerCorrect (int questionId, int answerId) {
-        return questionRepository.getQuestion(questionId).getCorrectAnswer().getId() == answerId;
+    private boolean checkAnswerCorrect (String questionId, String answerId) {
+        return questionRepository.getQuestion(questionId).getCorrectAnswer().getId().equals(answerId);
     }
 }
