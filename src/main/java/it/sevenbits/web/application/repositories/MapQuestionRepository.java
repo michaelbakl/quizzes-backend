@@ -3,37 +3,59 @@ package it.sevenbits.web.application.repositories;
 import it.sevenbits.web.application.model.Answer;
 import it.sevenbits.web.application.model.Question;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
+
+/**
+ * question repository implementation
+ */
 public class MapQuestionRepository implements IQuestionRepository {
     private final Map<String, Question> questionsMap;
     private final Random random;
 
+    /**
+     * constructor
+     */
     public MapQuestionRepository() {
         questionsMap = new HashMap<>();
         random = new Random();
         fillMapWithQuestionsForTest();
     }
 
-    public MapQuestionRepository(Map<String, Question> questionsMap) {
+    /**
+     * constructor
+     * @param questionsMap - Map
+     */
+    public MapQuestionRepository(final Map<String, Question> questionsMap) {
         this.questionsMap = questionsMap;
         random = new Random();
         fillMapWithQuestionsForTest();
     }
 
-    private void fillMapWithQuestionsForTest () {
-        for (int i = 0; i < 20; i++) {
+    @SuppressWarnings("checkstyle:MagicNumber")
+    private void fillMapWithQuestionsForTest() {
+        int twenty = 20;
+        for (int i = 0; i < twenty; i++) {
             List<Answer> list = new ArrayList<>();
             Answer correctAnswer = new Answer(UUID.randomUUID().toString(), "Answer1", 1);
             list.add(correctAnswer);
             list.add(new Answer(UUID.randomUUID().toString(), "Answer2", 0));
             list.add(new Answer(UUID.randomUUID().toString(), "Answer3", 0));
-            questionsMap.put(UUID.randomUUID().toString(), new Question(UUID.randomUUID().toString(), "Question " + String.valueOf(i), list, correctAnswer));
+            questionsMap.put(UUID.randomUUID().toString(),
+                    new Question(UUID.randomUUID().toString(),
+                            "Question " + i,
+                            list,
+                            correctAnswer));
         }
     }
 
     @Override
-    public Question getQuestion(String id) {
+    public Question getQuestion(final String id) {
         return questionsMap.get(id);
     }
 
@@ -43,7 +65,7 @@ public class MapQuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public List<Question> getListOfRandomQuestion(int size) {
+    public List<Question> getListOfRandomQuestion(final int size) {
         List<Question> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             result.add(getRandomQuestion());
@@ -52,7 +74,7 @@ public class MapQuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public List<String> getListOfRandomQuestionsIds(int size) {
+    public List<String> getListOfRandomQuestionsIds(final int size) {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             result.add(getRandomQuestion().getId());

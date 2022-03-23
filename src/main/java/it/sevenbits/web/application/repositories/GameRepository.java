@@ -2,11 +2,19 @@ package it.sevenbits.web.application.repositories;
 
 import it.sevenbits.web.application.model.Game;
 
+/**
+ * implementation of IGameRepository
+ */
 public class GameRepository implements IGameRepository {
-    private Game game;
+    private final Game game;
 
+    /**
+     * constructor
+     */
+    @SuppressWarnings("checkstyle:MagicNumber")
     public GameRepository() {
-        game = new Game(10);
+        int ten = 10;
+        game = new Game(ten);
     }
 
     @Override
@@ -15,7 +23,7 @@ public class GameRepository implements IGameRepository {
     }
 
     @Override
-    public void updateGameScore(int score) {
+    public void updateGameScore(final int score) {
         game.setScore(game.getScore() + score);
     }
 

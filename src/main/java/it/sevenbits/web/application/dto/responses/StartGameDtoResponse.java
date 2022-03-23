@@ -1,9 +1,16 @@
 package it.sevenbits.web.application.dto.responses;
 
+/**
+ * start game dto response
+ */
 public class StartGameDtoResponse {
-    public String questionId;
+    private String questionId;
 
-    public StartGameDtoResponse(String questionId) {
+    /**
+     * constructor
+     * @param questionId - String
+     */
+    public StartGameDtoResponse(final String questionId) {
         this.questionId = questionId;
     }
 
@@ -11,7 +18,7 @@ public class StartGameDtoResponse {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(final String questionId) {
         this.questionId = questionId;
     }
 }

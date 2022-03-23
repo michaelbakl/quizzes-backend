@@ -5,18 +5,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * model question class
+ */
 public class Question {
-    private String id;
+    private final String id;
     private String content;
-    List<Answer> answers;
+    private List<Answer> answers;
     private Answer correctAnswer;
 
+    /**
+     * constructor
+     *
+     * @param id - String
+     * @param content - String
+     * @param answers - List
+     * @param correctAnswer - Answer
+     */
     @JsonCreator
-    public Question(@JsonProperty("id") String id,
-                    @JsonProperty("content")String content,
-                    @JsonProperty("answers") List<Answer> answers,
-                    @JsonProperty("correctAnswer")Answer correctAnswer)
-    {
+    public Question(@JsonProperty("id") final String id,
+                    @JsonProperty("content") final String content,
+                    @JsonProperty("answers") final List<Answer> answers,
+                    @JsonProperty("correctAnswer") final Answer correctAnswer) {
         this.id = id;
         this.content = content;
         this.answers = answers;
@@ -31,7 +41,7 @@ public class Question {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
 
@@ -39,7 +49,7 @@ public class Question {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(final List<Answer> answers) {
         this.answers = answers;
     }
 
@@ -47,7 +57,7 @@ public class Question {
         return correctAnswer;
     }
 
-    public void setCorrectAnswer(Answer correctAnswer) {
+    public void setCorrectAnswer(final Answer correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
 }

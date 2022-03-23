@@ -3,27 +3,48 @@ package it.sevenbits.web.application.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * model game class
+ */
 public class Game {
     private int score;
     private int questionsAmount;
     private List<String> questionsIds;
     private int currentIdPos;
 
-    public Game(int score, int questionsAmount, List<String> questionsIds) {
+    /**
+     * constructor
+     *
+     * @param score - int
+     * @param questionsAmount - int
+     * @param questionsIds - List
+     */
+    public Game(final int score, final int questionsAmount, final List<String> questionsIds) {
         this.score = score;
         this.questionsAmount = questionsAmount;
         this.questionsIds = questionsIds;
         currentIdPos = 0;
     }
 
-    public Game(int score, int questionsAmount) {
+    /**
+     * constructor
+     *
+     * @param score - int
+     * @param questionsAmount - int
+     */
+    public Game(final int score, final int questionsAmount) {
         this.score = score;
         this.questionsAmount = questionsAmount;
         questionsIds = new ArrayList<>();
         currentIdPos = 0;
     }
 
-    public Game(int questionsAmount) {
+    /**
+     * constructor
+     *
+     * @param questionsAmount - int
+     */
+    public Game(final int questionsAmount) {
         score = 0;
         this.questionsAmount = questionsAmount;
         questionsIds = new ArrayList<>();
@@ -34,7 +55,7 @@ public class Game {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(final int score) {
         this.score = score;
     }
 
@@ -42,7 +63,7 @@ public class Game {
         return questionsAmount;
     }
 
-    public void setQuestionsAmount(int questionsAmount) {
+    public void setQuestionsAmount(final int questionsAmount) {
         this.questionsAmount = questionsAmount;
     }
 
@@ -50,7 +71,7 @@ public class Game {
         return questionsIds;
     }
 
-    public void setQuestionsIds(List<String> questionsIds) {
+    public void setQuestionsIds(final List<String> questionsIds) {
         this.questionsIds = questionsIds;
     }
 
@@ -58,15 +79,20 @@ public class Game {
         return questionsIds.get(currentIdPos);
     }
 
-    public void setCurrentId(int idPos) {
+    public void setCurrentId(final int idPos) {
         currentIdPos = idPos;
     }
 
-    public String getNextId(){
+    /**
+     * getNextId method
+     * @return String - id of the next question
+     */
+    public String getNextId() {
         currentIdPos++;
         if (currentIdPos < questionsAmount) {
             return questionsIds.get(currentIdPos);
+        } else {
+            return "";
         }
-        else return "";
     }
 }

@@ -7,10 +7,20 @@ import it.sevenbits.web.application.services.IGameService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * service config
+ */
 @Configuration
 public class ServiceConfig {
+    /**
+     * Bean for IGameService
+     *
+     * @param gameRepository - IGameRepository
+     * @param questionRepository - IQuestionRepository
+     * @return IGameService
+     */
     @Bean
-    public IGameService gameService(IGameRepository gameRepository, IQuestionRepository questionRepository) {
+    public IGameService gameService(final IGameRepository gameRepository, final IQuestionRepository questionRepository) {
         return new GameService(gameRepository, questionRepository);
     }
 }

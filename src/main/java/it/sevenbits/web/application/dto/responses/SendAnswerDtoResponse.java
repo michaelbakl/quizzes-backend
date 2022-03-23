@@ -1,11 +1,20 @@
 package it.sevenbits.web.application.dto.responses;
 
+/**
+ * send answer dto response
+ */
 public class SendAnswerDtoResponse {
-    public int result;
-    public int score;
-    public String nextQuestionId;
+    private int result;
+    private int score;
+    private final String nextQuestionId;
 
-    public SendAnswerDtoResponse(int result, int score, String nextQuestionId) {
+    /**
+     * constructor
+     * @param result - int
+     * @param score - int
+     * @param nextQuestionId - String
+     */
+    public SendAnswerDtoResponse(final int result, final int score, final String nextQuestionId) {
         this.result = result;
         this.score = score;
         this.nextQuestionId = nextQuestionId;
@@ -15,7 +24,7 @@ public class SendAnswerDtoResponse {
         return result;
     }
 
-    public void setResult(int result) {
+    public void setResult(final int result) {
         this.result = result;
     }
 
@@ -23,7 +32,7 @@ public class SendAnswerDtoResponse {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(final int score) {
         this.score = score;
     }
 

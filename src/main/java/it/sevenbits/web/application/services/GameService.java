@@ -7,15 +7,25 @@ import it.sevenbits.web.application.model.Question;
 import it.sevenbits.web.application.repositories.IGameRepository;
 import it.sevenbits.web.application.repositories.IQuestionRepository;
 
+/**
+ * game service
+ */
 public class GameService implements IGameService {
-    private IGameRepository gameRepository;
-    private IQuestionRepository questionRepository;
+    private final IGameRepository gameRepository;
+    private final IQuestionRepository questionRepository;
 
-    public GameService(IGameRepository gameRepository, IQuestionRepository questionRepository) {
+    /**
+     * constructor
+     *
+     * @param gameRepository     - IGameRepository
+     * @param questionRepository - IQuestionRepository
+     */
+    public GameService(final IGameRepository gameRepository, final IQuestionRepository questionRepository) {
         this.gameRepository = gameRepository;
         this.questionRepository = questionRepository;
     }
 
+    @SuppressWarnings("checkstyle:MagicNumber")
     @Override
     public StartGameDtoResponse startGame() {
         Game game = gameRepository.getGame();
@@ -27,31 +37,30 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public Question getQuestion(String id) {
+    public Question getQuestion(final String id) {
         return questionRepository.getQuestion(id);
     }
 
     @Override
-    public SendAnswerDtoResponse sendAnswer(String questionId, String answerID) {
+    public SendAnswerDtoResponse sendAnswer(final String questionId, final String answerID) {
         int result = 0;
         if (checkAnswerCorrect(questionId, answerID)) {
             result = 1;
         }
         gameRepository.updateGameScore(result);
-        SendAnswerDtoResponse response = new SendAnswerDtoResponse(
+        return new SendAnswerDtoResponse(
                 result,
                 gameRepository.getGameScore(),
                 gameRepository.getNextQuestionId()
         );
-        return response;
     }
 
     @Override
-    public void validateAnswer(String id) {
+    public void validateAnswer(final String id) {
 
     }
 
-    private boolean checkAnswerCorrect (String questionId, String answerId) {
+    private boolean checkAnswerCorrect(final String questionId, final String answerId) {
         return questionRepository.getQuestion(questionId).getCorrectAnswer().getId().equals(answerId);
     }
 }
