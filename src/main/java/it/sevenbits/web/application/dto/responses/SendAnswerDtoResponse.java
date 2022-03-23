@@ -4,36 +4,37 @@ package it.sevenbits.web.application.dto.responses;
  * send answer dto response
  */
 public class SendAnswerDtoResponse {
-    private int result;
-    private int score;
+    private String correctAnswerId;
+    private int questionScore;
+    private int totalScore;
     private final String nextQuestionId;
 
     /**
      * constructor
-     * @param result - int
-     * @param score - int
+     * @param questionScore - int
+     * @param totalScore - int
      * @param nextQuestionId - String
      */
-    public SendAnswerDtoResponse(final int result, final int score, final String nextQuestionId) {
-        this.result = result;
-        this.score = score;
+    public SendAnswerDtoResponse(final int questionScore, final int totalScore, final String nextQuestionId) {
+        this.questionScore = questionScore;
+        this.totalScore = totalScore;
         this.nextQuestionId = nextQuestionId;
     }
 
     public int getResult() {
-        return result;
+        return questionScore;
     }
 
     public void setResult(final int result) {
-        this.result = result;
+        this.questionScore = result;
     }
 
     public int getScore() {
-        return score;
+        return totalScore;
     }
 
     public void setScore(final int score) {
-        this.score = score;
+        this.totalScore = score;
     }
 
     public String getNextQuestionId() {
