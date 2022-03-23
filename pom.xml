@@ -41,7 +41,9 @@
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>checkstyle</goal></goals>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -55,5 +57,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
