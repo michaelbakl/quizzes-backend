@@ -6,6 +6,7 @@ import it.sevenbits.web.application.dto.responses.SendAnswerDtoResponse;
 import it.sevenbits.web.application.dto.responses.StartGameDtoResponse;
 import it.sevenbits.web.application.model.Question;
 import it.sevenbits.web.application.services.IGameService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,8 +38,12 @@ public class GameController {
      */
     @RequestMapping("/start")
     ResponseEntity<StartGameDtoResponse> startGame() {
-        StartGameDtoResponse response = gameService.startGame();
-        return ResponseEntity.ok().body(response);
+        try {
+            StartGameDtoResponse response = gameService.startGame();
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -49,7 +54,11 @@ public class GameController {
     @RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Question getQuestion(@PathVariable("id") final String id) {
-        return gameService.getQuestion(id);
+        try {
+            return gameService.getQuestion(id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -63,9 +72,13 @@ public class GameController {
     public ResponseEntity<SendAnswerDtoResponse> sendAnswer(@JsonProperty("id") final String questionId,
                                                             @RequestBody final AnswerQuestionRequest
                                                                     answerQuestionRequest) {
-        gameService.sendAnswer(questionId, answerQuestionRequest.getId());
-        SendAnswerDtoResponse response = gameService.sendAnswer(questionId, answerQuestionRequest.getId());
-        return ResponseEntity.ok().body(response);
+        try {
+            gameService.sendAnswer(questionId, answerQuestionRequest.getId());
+            SendAnswerDtoResponse response = gameService.sendAnswer(questionId, answerQuestionRequest.getId());
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
 
