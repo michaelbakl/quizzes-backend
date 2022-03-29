@@ -7,6 +7,7 @@ import it.sevenbits.web.application.dto.responses.StartGameDtoResponse;
 import it.sevenbits.web.application.model.Question;
 import it.sevenbits.web.application.services.IGameService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,15 +68,14 @@ public class GameController {
      * @param answerQuestionRequest - AnswerQuestionRequest
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/questions/{id}/answer", method = RequestMethod.POST)
+    @RequestMapping(value = "/questions/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<SendAnswerDtoResponse> sendAnswer(@JsonProperty("id") final String questionId,
+    public ResponseEntity<SendAnswerDtoResponse> sendAnswer(@JsonProperty("questionId") final String questionId,
                                                             @RequestBody final AnswerQuestionRequest
                                                                     answerQuestionRequest) {
         try {
-            gameService.sendAnswer(questionId, answerQuestionRequest.getId());
             SendAnswerDtoResponse response = gameService.sendAnswer(questionId, answerQuestionRequest.getId());
-            return ResponseEntity.ok().body(response);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
