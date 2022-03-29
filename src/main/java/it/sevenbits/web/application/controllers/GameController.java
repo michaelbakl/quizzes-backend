@@ -1,6 +1,5 @@
 package it.sevenbits.web.application.controllers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import it.sevenbits.web.application.dto.requests.AnswerQuestionRequest;
 import it.sevenbits.web.application.dto.responses.SendAnswerDtoResponse;
 import it.sevenbits.web.application.dto.responses.StartGameDtoResponse;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Game controller
  */
 @RestController
-@RequestMapping("/rooms/1/game")
+@RequestMapping("/rooms/{roomId}/game")
 public class GameController {
     private final IGameService gameService;
 
@@ -38,7 +37,7 @@ public class GameController {
      * @return ResponseEntity
      */
     @RequestMapping("/start")
-    ResponseEntity<StartGameDtoResponse> startGame() {
+    ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
         try {
             StartGameDtoResponse response = gameService.startGame();
             return ResponseEntity.ok().body(response);
@@ -52,9 +51,10 @@ public class GameController {
      * @param id - String
      * @return Question
      */
-    @RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/questions/{questionId}", method = RequestMethod.GET)
     @ResponseBody
-    public Question getQuestion(@PathVariable("id") final String id) {
+    public Question getQuestion(@PathVariable("roomId") final String roomId,
+                                @PathVariable("questionId") final String id) {
         try {
             return gameService.getQuestion(id);
         } catch (Exception e) {
@@ -70,9 +70,11 @@ public class GameController {
      */
     @RequestMapping(value = "/questions/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<SendAnswerDtoResponse> sendAnswer(@JsonProperty("questionId") final String questionId,
-                                                            @RequestBody final AnswerQuestionRequest
-                                                                    answerQuestionRequest) {
+    public ResponseEntity<SendAnswerDtoResponse> sendAnswer(@RequestBody final AnswerQuestionRequest
+                                                                        answerQuestionRequest,
+                                                            @PathVariable("roomId") final String roomId,
+                                                            @PathVariable("questionId") final String questionId
+                                                            ) {
         try {
             SendAnswerDtoResponse response = gameService.sendAnswer(questionId, answerQuestionRequest.getId());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
