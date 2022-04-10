@@ -55,7 +55,7 @@ public class GameController {
      * @param questionId - String
      * @return GetQuestionResponse
      */
-    @RequestMapping(value = "/questions/{questionId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/question/{questionId}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<GetQuestionResponse> getQuestion(@PathVariable("roomId") final String roomId,
                                                            @PathVariable("questionId") final String questionId) {
@@ -73,7 +73,7 @@ public class GameController {
      * @param answerQuestionRequest - AnswerQuestionRequest
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/questions/{questionId}/answer", method = RequestMethod.POST)
+    @RequestMapping(value = "/question/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<AnswerQuestionResponse> sendAnswer(@RequestBody final AnswerQuestionRequest
                                                                         answerQuestionRequest,
