@@ -1,24 +1,22 @@
 package it.sevenbits.web.application.dto.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * start game dto response
  */
 public class StartGameDtoResponse {
-    private String questionId;
+    private final String questionId;
 
     /**
      * constructor
      * @param questionId - String
      */
-    public StartGameDtoResponse(final String questionId) {
+    public StartGameDtoResponse(@JsonProperty("questionId") final String questionId) {
         this.questionId = questionId;
     }
 
     public String getQuestionId() {
         return questionId;
-    }
-
-    public void setQuestionId(final String questionId) {
-        this.questionId = questionId;
     }
 }

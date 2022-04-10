@@ -1,6 +1,7 @@
 package it.sevenbits.web.application.repositories;
 
 import it.sevenbits.web.application.model.Game;
+import it.sevenbits.web.application.model.Question;
 
 /**
  * interface for game repository

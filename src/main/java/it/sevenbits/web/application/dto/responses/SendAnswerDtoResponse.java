@@ -1,21 +1,28 @@
 package it.sevenbits.web.application.dto.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * send answer dto response
  */
 public class SendAnswerDtoResponse {
-    private String correctAnswerId;
-    private int questionScore;
-    private int totalScore;
+    private final String correctAnswerId;
+    private final int questionScore;
+    private final int totalScore;
     private final String nextQuestionId;
 
     /**
-     * constructor
-     * @param questionScore - int
-     * @param totalScore - int
+     *
+     * @param correctAnswerId - String
      * @param nextQuestionId - String
+     * @param totalScore - int
+     * @param questionScore - int
      */
-    public SendAnswerDtoResponse(final int questionScore, final int totalScore, final String nextQuestionId) {
+    public SendAnswerDtoResponse(@JsonProperty("correctAnswerId") final String correctAnswerId,
+                                 @JsonProperty("nextQuestionId") final String nextQuestionId,
+                                 @JsonProperty("totalScore") final int totalScore,
+                                 @JsonProperty("questionScore") final int questionScore) {
+        this.correctAnswerId = correctAnswerId;
         this.questionScore = questionScore;
         this.totalScore = totalScore;
         this.nextQuestionId = nextQuestionId;
@@ -25,20 +32,15 @@ public class SendAnswerDtoResponse {
         return questionScore;
     }
 
-    public void setResult(final int result) {
-        this.questionScore = result;
-    }
-
     public int getScore() {
         return totalScore;
-    }
-
-    public void setScore(final int score) {
-        this.totalScore = score;
     }
 
     public String getNextQuestionId() {
         return nextQuestionId;
     }
 
+    public String getCorrectAnswerId() {
+        return correctAnswerId;
+    }
 }

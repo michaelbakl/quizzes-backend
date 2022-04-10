@@ -1,5 +1,6 @@
 package it.sevenbits.web.application.services;
 
+import it.sevenbits.web.application.dto.responses.GetQuestionResponse;
 import it.sevenbits.web.application.dto.responses.SendAnswerDtoResponse;
 import it.sevenbits.web.application.dto.responses.StartGameDtoResponse;
 import it.sevenbits.web.application.model.Question;
@@ -19,7 +20,7 @@ public interface IGameService {
      * @param id - String
      * @return Question
      */
-    Question getQuestion(String id);
+    GetQuestionResponse getQuestion(String id);
 
     /**
      * send answer method

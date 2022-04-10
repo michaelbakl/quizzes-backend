@@ -1,11 +1,16 @@
 package it.sevenbits.web.application.services;
 
+import it.sevenbits.web.application.dto.responses.GetQuestionResponse;
 import it.sevenbits.web.application.dto.responses.SendAnswerDtoResponse;
 import it.sevenbits.web.application.dto.responses.StartGameDtoResponse;
 import it.sevenbits.web.application.model.Game;
 import it.sevenbits.web.application.model.Question;
+import it.sevenbits.web.application.repositories.GameRepository;
 import it.sevenbits.web.application.repositories.IGameRepository;
 import it.sevenbits.web.application.repositories.IQuestionRepository;
+import it.sevenbits.web.application.repositories.MapQuestionRepository;
+
+import java.util.Objects;
 
 /**
  * game service
@@ -16,13 +21,10 @@ public class GameService implements IGameService {
 
     /**
      * constructor
-     *
-     * @param gameRepository     - IGameRepository
-     * @param questionRepository - IQuestionRepository
      */
-    public GameService(final IGameRepository gameRepository, final IQuestionRepository questionRepository) {
-        this.gameRepository = gameRepository;
-        this.questionRepository = questionRepository;
+    public GameService() {
+        this.gameRepository = GameRepository.getGameRepository();
+        this.questionRepository = MapQuestionRepository.getQuestionRepository();
     }
 
     @SuppressWarnings("checkstyle:MagicNumber")
@@ -37,21 +39,29 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public Question getQuestion(final String id) {
-        return questionRepository.getQuestion(id);
+    public GetQuestionResponse getQuestion(final String id) {
+        Question question = questionRepository.getQuestion(id);
+        return new GetQuestionResponse(
+                question.getId(),
+                question.getContent(),
+                question.getAnswers(),
+                question.getCorrectAnswer()
+        );
     }
 
     @Override
     public SendAnswerDtoResponse sendAnswer(final String questionId, final String answerID) {
+        Question currentQuestion = questionRepository.getQuestion(questionId);
         int result = 0;
-        if (checkAnswerCorrect(questionId, answerID)) {
-            result = 1;
+        if (checkAnswerCorrect(currentQuestion, answerID)) {
+            result = currentQuestion.getCorrectAnswer().getPoints();
+            gameRepository.updateGameScore(result);
         }
-        gameRepository.updateGameScore(result);
         return new SendAnswerDtoResponse(
-                result,
+                currentQuestion.getCorrectAnswer().getId(),
+                gameRepository.getNextQuestionId(),
                 gameRepository.getGameScore(),
-                gameRepository.getNextQuestionId()
+                result
         );
     }
 
@@ -60,7 +70,7 @@ public class GameService implements IGameService {
 
     }
 
-    private boolean checkAnswerCorrect(final String questionId, final String answerId) {
-        return questionRepository.getQuestion(questionId).getCorrectAnswer().getId().equals(answerId);
+    private boolean checkAnswerCorrect(final Question question, final String answerId) {
+        return Objects.equals(question.getCorrectAnswer().getId(), answerId);
     }
 }

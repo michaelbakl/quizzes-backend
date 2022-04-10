@@ -21,6 +21,6 @@ public class ServiceConfig {
      */
     @Bean
     public IGameService gameService(final IGameRepository gameRepository, final IQuestionRepository questionRepository) {
-        return new GameService(gameRepository, questionRepository);
+        return new GameService();
     }
 }

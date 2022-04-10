@@ -19,7 +19,7 @@ public class RepositoryConfig {
      */
     @Bean
     public IGameRepository gameRepository() {
-        return new GameRepository();
+        return GameRepository.getGameRepository();
     }
 
     /**
@@ -29,6 +29,6 @@ public class RepositoryConfig {
      */
     @Bean
     public IQuestionRepository questionRepository() {
-        return new MapQuestionRepository();
+        return MapQuestionRepository.getQuestionRepository();
     }
 }

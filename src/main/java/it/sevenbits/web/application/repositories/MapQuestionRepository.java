@@ -14,27 +14,29 @@ import java.util.UUID;
 /**
  * question repository implementation
  */
-public class MapQuestionRepository implements IQuestionRepository {
+public final class MapQuestionRepository implements IQuestionRepository {
+    private static MapQuestionRepository mapQuestionRepository;
     private final Map<String, Question> questionsMap;
     private final Random random;
 
     /**
      * constructor
      */
-    public MapQuestionRepository() {
+    private MapQuestionRepository() {
         questionsMap = new HashMap<>();
         random = new Random();
         fillMapWithQuestionsForTest();
     }
 
     /**
-     * constructor
-     * @param questionsMap - Map
+     * singlton method
+     * @return MapQuestionRepository
      */
-    public MapQuestionRepository(final Map<String, Question> questionsMap) {
-        this.questionsMap = questionsMap;
-        random = new Random();
-        fillMapWithQuestionsForTest();
+    public static MapQuestionRepository getQuestionRepository() {
+        if (mapQuestionRepository == null) {
+            mapQuestionRepository = new MapQuestionRepository();
+        }
+        return mapQuestionRepository;
     }
 
     @SuppressWarnings("checkstyle:MagicNumber")

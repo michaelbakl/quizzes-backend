@@ -1,20 +1,33 @@
 package it.sevenbits.web.application.repositories;
 
 import it.sevenbits.web.application.model.Game;
+import it.sevenbits.web.application.model.Question;
 
 /**
  * implementation of IGameRepository
  */
-public class GameRepository implements IGameRepository {
+public final class GameRepository implements IGameRepository {
+    private static GameRepository gameRepository;
     private final Game game;
 
     /**
      * constructor
      */
     @SuppressWarnings("checkstyle:MagicNumber")
-    public GameRepository() {
+    private GameRepository() {
         int ten = 10;
         game = new Game(ten);
+    }
+
+    /**
+     * singlton method
+     * @return GameRepository
+     */
+    public static GameRepository getGameRepository() {
+        if (gameRepository == null) {
+            gameRepository = new GameRepository();
+        }
+        return gameRepository;
     }
 
     @Override
@@ -41,4 +54,5 @@ public class GameRepository implements IGameRepository {
     public String getNextQuestionId() {
         return game.getNextId();
     }
+
 }
