@@ -29,6 +29,10 @@ public class GameService {
         this.questionRepository = MapQuestionRepository.getQuestionRepository();
     }
 
+    /**
+     * start game method
+     * @return start game dto response
+     */
     public StartGameDtoResponse startGame() {
         int ten = 2 + 2 + 2 + 2 + 2;
         Game game = gameRepository.getGame();
@@ -39,6 +43,11 @@ public class GameService {
         return new StartGameDtoResponse(game.getCurrentQuestionId());
     }
 
+    /**
+     * get question method
+     * @param id - String
+     * @return AnswerQuestionResponse
+     */
     public GetQuestionResponse getQuestion(final String id) {
         Question question = questionRepository.getQuestion(id);
         return new GetQuestionResponse(
@@ -48,6 +57,12 @@ public class GameService {
         );
     }
 
+    /**
+     * send answer method
+     * @param questionId - String
+     * @param answerID - String
+     * @return AnswerQuestionResponse
+     */
     public AnswerQuestionResponse sendAnswer(final String questionId, final String answerID) {
         Question currentQuestion = questionRepository.getQuestion(questionId);
         int result = 0;
@@ -57,8 +72,8 @@ public class GameService {
         }
         return new AnswerQuestionResponse(
                 currentQuestion.getCorrectAnswer().getId(),
-                gameRepository.getNextQuestionId(),
                 gameRepository.getGameScore(),
+                gameRepository.getNextQuestionId(),
                 result
         );
     }

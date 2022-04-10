@@ -19,8 +19,8 @@ public class AnswerQuestionResponse {
      * @param questionScore - int
      */
     public AnswerQuestionResponse(@JsonProperty("correctAnswerId") final String correctAnswerId,
-                                  @JsonProperty("nextQuestionId") final String nextQuestionId,
                                   @JsonProperty("totalScore") final int totalScore,
+                                  @JsonProperty("nextQuestionId") final String nextQuestionId,
                                   @JsonProperty("questionScore") final int questionScore) {
         this.correctAnswerId = correctAnswerId;
         this.questionScore = questionScore;

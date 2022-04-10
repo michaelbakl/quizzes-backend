@@ -12,21 +12,21 @@ import java.util.List;
 public class GetQuestionResponse {
     private final String id;
     private final String content;
-    private final List<Answer> answers;
+    private final List<Answer> answersList;
 
     /**
      *
      * @param id - int
      * @param content - String
-     * @param answers - List
+     * @param answersList - List
      */
     @JsonCreator
     public GetQuestionResponse(@JsonProperty("questionId") final String id,
                                @JsonProperty("questionText") final String content,
-                               @JsonProperty("answerList") final List<Answer> answers) {
+                               @JsonProperty("answersList") final List<Answer> answersList) {
         this.id = id;
         this.content = content;
-        this.answers = answers;
+        this.answersList = answersList;
     }
 
     public String getId() {
@@ -38,6 +38,6 @@ public class GetQuestionResponse {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answersList;
     }
 }
