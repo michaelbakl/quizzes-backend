@@ -12,7 +12,7 @@ import java.util.List;
 public class GetQuestionResponse {
     private final String id;
     private final String content;
-    private final List<Answer> answersList;
+    private final Answer[] answersList;
 
     /**
      *
@@ -23,7 +23,7 @@ public class GetQuestionResponse {
     @JsonCreator
     public GetQuestionResponse(@JsonProperty("questionId") final String id,
                                @JsonProperty("questionText") final String content,
-                               @JsonProperty("answersList") final List<Answer> answersList) {
+                               @JsonProperty("answersList") final Answer[] answersList) {
         this.id = id;
         this.content = content;
         this.answersList = answersList;
@@ -37,7 +37,7 @@ public class GetQuestionResponse {
         return content;
     }
 
-    public List<Answer> getAnswers() {
+    public Answer[] getAnswers() {
         return answersList;
     }
 }

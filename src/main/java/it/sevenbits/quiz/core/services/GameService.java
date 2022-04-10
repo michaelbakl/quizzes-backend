@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.services;
 
+import it.sevenbits.quiz.core.model.Answer;
 import it.sevenbits.quiz.core.repositories.IGameRepository;
 import it.sevenbits.quiz.core.repositories.IQuestionRepository;
 import it.sevenbits.web.dto.responses.GetQuestionResponse;
@@ -50,10 +51,11 @@ public class GameService {
      */
     public GetQuestionResponse getQuestion(final String id) {
         Question question = questionRepository.getQuestion(id);
+        Answer[] answers = question.getAnswers().toArray(new Answer[0]);
         return new GetQuestionResponse(
                 question.getId(),
                 question.getContent(),
-                question.getAnswers()
+                answers
         );
     }
 
