@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.sevenbits.quiz.core.model.Answer;
 
-import java.util.List;
-
 /**
  * GetQuestionResponse class
  */
@@ -18,7 +16,7 @@ public class GetQuestionResponse {
      *
      * @param id - int
      * @param content - String
-     * @param answersList - List
+     * @param answersList - array of Answer
      */
     @JsonCreator
     public GetQuestionResponse(@JsonProperty("questionId") final String id,

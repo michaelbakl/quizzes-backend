@@ -74,8 +74,8 @@ public class GameService {
         }
         return new AnswerQuestionResponse(
                 currentQuestion.getCorrectAnswer().getId(),
-                gameRepository.getGameScore(),
                 gameRepository.getNextQuestionId(),
+                gameRepository.getGameScore(),
                 result
         );
     }

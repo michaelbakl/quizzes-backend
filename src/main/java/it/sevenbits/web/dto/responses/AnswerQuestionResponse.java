@@ -7,22 +7,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class AnswerQuestionResponse {
     private final String correctAnswerId;
-    private final int questionScore;
-    private final int totalScore;
     private final String nextQuestionId;
+    private final int totalScore;
+    private final int questionScore;
 
     /**
      *
-     * @param correctAnswerId - String
+     * @param correctAnswer - String
      * @param nextQuestionId - String
      * @param totalScore - int
      * @param questionScore - int
      */
-    public AnswerQuestionResponse(@JsonProperty("correctAnswerId") final String correctAnswerId,
-                                  @JsonProperty("totalScore") final int totalScore,
+    public AnswerQuestionResponse(@JsonProperty("correctAnswer") final String correctAnswer,
                                   @JsonProperty("nextQuestionId") final String nextQuestionId,
+                                  @JsonProperty("totalScore") final int totalScore,
                                   @JsonProperty("questionScore") final int questionScore) {
-        this.correctAnswerId = correctAnswerId;
+        this.correctAnswerId = correctAnswer;
         this.questionScore = questionScore;
         this.totalScore = totalScore;
         this.nextQuestionId = nextQuestionId;
