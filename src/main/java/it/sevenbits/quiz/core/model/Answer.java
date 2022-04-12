@@ -9,7 +9,7 @@ public class Answer {
     @JsonProperty
     private String answerId;
     @JsonProperty
-    private String text;
+    private String answerText;
     private int points;
 
     /**
@@ -23,7 +23,7 @@ public class Answer {
                   final String content,
                   final int points) {
         this.answerId = id;
-        this.text = content;
+        this.answerText = content;
         this.points = points;
     }
 
@@ -31,8 +31,8 @@ public class Answer {
         return answerId;
     }
 
-    public String getText() {
-        return text;
+    public String getAnswerText() {
+        return answerText;
     }
 
     public int getPoints() {
@@ -43,8 +43,8 @@ public class Answer {
         this.answerId = answerId;
     }
 
-    public void setText(final String text) {
-        this.text = text;
+    public void setAnswerText(final String answerText) {
+        this.answerText = answerText;
     }
 
     public void setPoints(final int points) {
