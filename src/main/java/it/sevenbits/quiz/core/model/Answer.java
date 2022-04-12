@@ -1,11 +1,15 @@
 package it.sevenbits.quiz.core.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * model answer
  */
 public class Answer {
-    private String id;
-    private String content;
+    @JsonProperty
+    private String answerId;
+    @JsonProperty
+    private String text;
     private int points;
 
     /**
@@ -18,29 +22,29 @@ public class Answer {
     public Answer(final String id,
                   final String content,
                   final int points) {
-        this.id = id;
-        this.content = content;
+        this.answerId = id;
+        this.text = content;
         this.points = points;
     }
 
-    public String getId() {
-        return id;
+    public String getAnswerId() {
+        return answerId;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
     public int getPoints() {
         return points;
     }
 
-    public void setId(final String id) {
-        this.id = id;
+    public void setAnswerId(final String answerId) {
+        this.answerId = answerId;
     }
 
-    public void setContent(final String content) {
-        this.content = content;
+    public void setText(final String text) {
+        this.text = text;
     }
 
     public void setPoints(final int points) {

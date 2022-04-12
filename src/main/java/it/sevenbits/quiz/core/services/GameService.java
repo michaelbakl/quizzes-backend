@@ -73,7 +73,7 @@ public class GameService {
             gameRepository.updateGameScore(result);
         }
         return new AnswerQuestionResponse(
-                currentQuestion.getCorrectAnswer().getId(),
+                currentQuestion.getCorrectAnswer().getAnswerId(),
                 gameRepository.getNextQuestionId(),
                 gameRepository.getGameScore(),
                 result
@@ -81,6 +81,6 @@ public class GameService {
     }
 
     private boolean checkAnswerCorrect(final Question question, final String answerId) {
-        return Objects.equals(question.getCorrectAnswer().getId(), answerId);
+        return Objects.equals(question.getCorrectAnswer().getAnswerId(), answerId);
     }
 }
