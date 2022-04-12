@@ -6,9 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * send answer dto response
  */
 public class AnswerQuestionResponse {
+    @JsonProperty
     private final String correctAnswerId;
+    @JsonProperty
     private final String nextQuestionId;
+    @JsonProperty
     private final int totalScore;
+    @JsonProperty
     private final int questionScore;
 
     /**
@@ -28,11 +32,11 @@ public class AnswerQuestionResponse {
         this.nextQuestionId = nextQuestionId;
     }
 
-    public int getResult() {
+    public int getQuestionScore() {
         return questionScore;
     }
 
-    public int getScore() {
+    public int getTotalScore() {
         return totalScore;
     }
 
