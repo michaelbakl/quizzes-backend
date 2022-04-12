@@ -22,7 +22,7 @@ public class AnswerQuestionResponse {
      * @param totalScore - int
      * @param questionScore - int
      */
-    public AnswerQuestionResponse(@JsonProperty("correctAnswer") final String correctAnswer,
+    public AnswerQuestionResponse(@JsonProperty("correctAnswerId") final String correctAnswer,
                                   @JsonProperty("nextQuestionId") final String nextQuestionId,
                                   @JsonProperty("totalScore") final int totalScore,
                                   @JsonProperty("questionScore") final int questionScore) {

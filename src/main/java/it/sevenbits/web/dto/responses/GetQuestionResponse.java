@@ -8,8 +8,11 @@ import it.sevenbits.quiz.core.model.Answer;
  * GetQuestionResponse class
  */
 public class GetQuestionResponse {
-    private final String id;
-    private final String content;
+    @JsonProperty
+    private final String questionId;
+    @JsonProperty
+    private final String questionText;
+    @JsonProperty
     private final Answer[] answersList;
 
     /**
@@ -22,20 +25,20 @@ public class GetQuestionResponse {
     public GetQuestionResponse(@JsonProperty("questionId") final String id,
                                @JsonProperty("questionText") final String content,
                                @JsonProperty("answersList") final Answer[] answersList) {
-        this.id = id;
-        this.content = content;
+        this.questionId = id;
+        this.questionText = content;
         this.answersList = answersList;
     }
 
-    public String getId() {
-        return id;
+    public String getQuestionId() {
+        return questionId;
     }
 
-    public String getContent() {
-        return content;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public Answer[] getAnswers() {
+    public Answer[] getAnswersList() {
         return answersList;
     }
 }
