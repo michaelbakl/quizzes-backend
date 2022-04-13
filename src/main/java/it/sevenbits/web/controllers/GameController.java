@@ -1,6 +1,6 @@
 package it.sevenbits.web.controllers;
 
-import it.sevenbits.quiz.core.services.GameService;
+import it.sevenbits.quiz.core.services.IGameService;
 import it.sevenbits.web.dto.requests.AnswerQuestionRequest;
 import it.sevenbits.web.dto.responses.GetQuestionResponse;
 import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/rooms/{roomId}/game")
 public class GameController {
 
-    private final GameService gameService;
+    private final IGameService gameService;
 
     /**
      * constructor
@@ -31,7 +31,7 @@ public class GameController {
      * @param gameService - GameService
      */
     @Autowired
-    public GameController(final GameService gameService) {
+    public GameController(final IGameService gameService) {
         this.gameService = gameService;
     }
 
@@ -39,6 +39,7 @@ public class GameController {
      * startGame method
      * @return StartGameDtoResponse
      */
+    @SuppressWarnings("checkstyle:JavadocMethod")
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
         try {
@@ -73,6 +74,7 @@ public class GameController {
      * @param answerQuestionRequest - AnswerQuestionRequest
      * @return ResponseEntity
      */
+    @SuppressWarnings("checkstyle:JavadocMethod")
     @RequestMapping(value = "/question/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<AnswerQuestionResponse> sendAnswer(@RequestBody final AnswerQuestionRequest

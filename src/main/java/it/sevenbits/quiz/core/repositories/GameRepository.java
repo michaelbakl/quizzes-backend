@@ -16,7 +16,7 @@ public final class GameRepository implements IGameRepository {
      */
     @SuppressWarnings("checkstyle:MagicNumber")
     private GameRepository() {
-        int ten = 10;
+        int ten = 2 + 2 + 2 + 2 + 2;
         game = new Game(ten);
     }
 

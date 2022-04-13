@@ -1,6 +1,7 @@
 package it.sevenbits.web.configs;
 
 import it.sevenbits.quiz.core.services.GameService;
+import it.sevenbits.quiz.core.services.IGameService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +16,7 @@ public class ServiceConfig {
      * @return IGameService
      */
     @Bean
-    public GameService gameService() {
+    public IGameService gameService() {
         return new GameService();
     }
 }

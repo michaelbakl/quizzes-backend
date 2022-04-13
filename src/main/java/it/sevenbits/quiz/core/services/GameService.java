@@ -18,7 +18,7 @@ import java.util.Objects;
  * game service
  */
 @Service
-public class GameService {
+public class GameService implements IGameService {
     private final IGameRepository gameRepository;
     private final IQuestionRepository questionRepository;
 
@@ -30,10 +30,7 @@ public class GameService {
         this.questionRepository = MapQuestionRepository.getQuestionRepository();
     }
 
-    /**
-     * start game method
-     * @return start game dto response
-     */
+    @Override
     public StartGameDtoResponse startGame() {
         int ten = 2 + 2 + 2 + 2 + 2;
         Game game = gameRepository.getGame();
@@ -44,11 +41,7 @@ public class GameService {
         return new StartGameDtoResponse(game.getCurrentQuestionId());
     }
 
-    /**
-     * get question method
-     * @param id - String
-     * @return AnswerQuestionResponse
-     */
+    @Override
     public GetQuestionResponse getQuestion(final String id) {
         Question question = questionRepository.getQuestion(id);
         Answer[] answers = question.getAnswers().toArray(new Answer[0]);
@@ -59,12 +52,7 @@ public class GameService {
         );
     }
 
-    /**
-     * send answer method
-     * @param questionId - String
-     * @param answerID - String
-     * @return AnswerQuestionResponse
-     */
+    @Override
     public AnswerQuestionResponse sendAnswer(final String questionId, final String answerID) {
         Question currentQuestion = questionRepository.getQuestion(questionId);
         int result = 0;

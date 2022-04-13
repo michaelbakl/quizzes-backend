@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * application class
  */
+@SuppressWarnings("checkstyle:FinalClass")
 @SpringBootApplication
 public class Application {
+    private Application() {}
 
     /**
      * main

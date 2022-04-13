@@ -43,7 +43,7 @@ public final class MapQuestionRepository implements IQuestionRepository {
 
     @SuppressWarnings("checkstyle:MagicNumber")
     private void fillMapWithQuestionsForTest() {
-        int twenty = 20;
+        int twenty = 2 * 2 * 2 * 2 + 2 + 2;
         for (int i = 0; i < twenty; i++) {
             List<Answer> list = new ArrayList<>();
             Answer correctAnswer = new Answer(String.valueOf(UUID.randomUUID()), "Answer1", 1);
