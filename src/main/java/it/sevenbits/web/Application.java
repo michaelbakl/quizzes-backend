@@ -6,10 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * application class
  */
-@SuppressWarnings("checkstyle:FinalClass")
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 @SpringBootApplication
 public class Application {
-    private Application() {}
 
     /**
      * main
