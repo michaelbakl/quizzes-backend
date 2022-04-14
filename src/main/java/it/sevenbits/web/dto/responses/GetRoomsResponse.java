@@ -3,7 +3,6 @@ package it.sevenbits.web.dto.responses;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.sevenbits.quiz.core.model.Room;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,20 +10,20 @@ import java.util.List;
  */
 public class GetRoomsResponse {
   @JsonProperty
-  private final List<GetRoomInfoResponse> list;
+  private final GetRoomInfoResponse[] response;
 
   /**
    * constructor
    * @param list - List
    */
   public GetRoomsResponse(final List<Room> list) {
-    this.list = new ArrayList<>();
-    for (Room room: list) {
-      this.list.add(new GetRoomInfoResponse(room.getRoomId(), room.getRoomName()));
+    response = new GetRoomInfoResponse[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+      response[i] = new GetRoomInfoResponse(list.get(i).getRoomId(), list.get(i).getRoomName());
     }
   }
 
-  public GetRoomInfoResponse[] getList() {
-    return list.toArray(new GetRoomInfoResponse[0]);
+  public GetRoomInfoResponse[] getResponse() {
+    return response;
   }
 }

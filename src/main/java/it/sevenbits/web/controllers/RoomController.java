@@ -3,6 +3,7 @@ package it.sevenbits.web.controllers;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.web.dto.requests.CreateRoomRequest;
 import it.sevenbits.web.dto.requests.JoinRoomRequest;
+import it.sevenbits.web.dto.responses.GetRoomInfoResponse;
 import it.sevenbits.web.dto.responses.GetRoomResponse;
 import it.sevenbits.web.dto.responses.GetRoomsResponse;
 import org.springframework.http.HttpStatus;
@@ -37,10 +38,10 @@ public class RoomController {
    * @return GetRoomsResponse
    */
   @RequestMapping(method = RequestMethod.GET)
-  ResponseEntity<GetRoomsResponse> getAllRooms() {
+  ResponseEntity<GetRoomInfoResponse[]> getAllRooms() {
     try {
       GetRoomsResponse response = roomService.getAllRooms();
-      return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
+      return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response.getResponse());
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

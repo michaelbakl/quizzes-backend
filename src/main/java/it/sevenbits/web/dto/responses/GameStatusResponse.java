@@ -27,7 +27,7 @@ public class GameStatusResponse {
   public GameStatusResponse(@JsonProperty("status") final String status,
                             @JsonProperty("questionId") final String questionId,
                             @JsonProperty("questionNumber") final int questionNumber,
-                            @JsonProperty("questionCount") final int questionsCount) {
+                            @JsonProperty("questionsCount") final int questionsCount) {
     this.status = status;
     this.questionId = questionId;
     this.questionNumber = questionNumber;

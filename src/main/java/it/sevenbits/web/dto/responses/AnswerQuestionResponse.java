@@ -9,7 +9,7 @@ public class AnswerQuestionResponse {
     @JsonProperty
     private final String correctAnswerId;
     @JsonProperty
-    private final String nextQuestionId;
+    private final String questionId;
     @JsonProperty
     private final int totalScore;
     @JsonProperty
@@ -23,13 +23,13 @@ public class AnswerQuestionResponse {
      * @param questionScore - int
      */
     public AnswerQuestionResponse(@JsonProperty("correctAnswerId") final String correctAnswer,
-                                  @JsonProperty("nextQuestionId") final String nextQuestionId,
+                                  @JsonProperty("questionId") final String nextQuestionId,
                                   @JsonProperty("totalScore") final int totalScore,
                                   @JsonProperty("questionScore") final int questionScore) {
         this.correctAnswerId = correctAnswer;
         this.questionScore = questionScore;
         this.totalScore = totalScore;
-        this.nextQuestionId = nextQuestionId;
+        this.questionId = nextQuestionId;
     }
 
     public int getQuestionScore() {
@@ -40,8 +40,8 @@ public class AnswerQuestionResponse {
         return totalScore;
     }
 
-    public String getNextQuestionId() {
-        return nextQuestionId;
+    public String getQuestionId() {
+        return questionId;
     }
 
     public String getCorrectAnswerId() {
