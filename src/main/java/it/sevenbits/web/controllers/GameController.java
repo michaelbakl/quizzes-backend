@@ -82,7 +82,11 @@ public class GameController {
                                                              @PathVariable("questionId") final String questionId
                                                             ) {
         try {
-            AnswerQuestionResponse response = gameService.sendAnswer(roomId, questionId, answerQuestionRequest.getAnswerId());
+            AnswerQuestionResponse response =
+                    gameService.sendAnswer(roomId,
+                            answerQuestionRequest.getPlayerId(),
+                            questionId,
+                            answerQuestionRequest.getAnswerId());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
