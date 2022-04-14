@@ -1,9 +1,10 @@
 package it.sevenbits.web.controllers;
 
-import it.sevenbits.quiz.core.services.IGameService;
+import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.web.dto.requests.AnswerQuestionRequest;
-import it.sevenbits.web.dto.responses.GetQuestionResponse;
 import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
+import it.sevenbits.web.dto.responses.GameStatusResponse;
+import it.sevenbits.web.dto.responses.GetQuestionResponse;
 import it.sevenbits.web.dto.responses.StartGameDtoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,7 +42,7 @@ public class GameController {
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
         try {
-            StartGameDtoResponse response = gameService.startGame();
+            StartGameDtoResponse response = gameService.startGame(roomId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,12 +82,29 @@ public class GameController {
                                                              @PathVariable("questionId") final String questionId
                                                             ) {
         try {
-            AnswerQuestionResponse response = gameService.sendAnswer(questionId, answerQuestionRequest.getAnswerId());
+            AnswerQuestionResponse response = gameService.sendAnswer(roomId, questionId, answerQuestionRequest.getAnswerId());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     *
+     * @param roomId - String
+     * @return GameStatusResponse
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<GameStatusResponse> getGameStatus(@PathVariable("roomId") final String roomId) {
+        try {
+            GameStatusResponse gameStatusResponse = gameService.getGameStatus(roomId);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
+        } catch (Exception e) {
+            GameStatusResponse gameStatusResponse =
+                    new GameStatusResponse("INVALID", "INNVALID", -1, -1);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
+        }
+    }
+
 }
-
-

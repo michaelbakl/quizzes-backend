@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.core.repositories;
+package it.sevenbits.quiz.core.repositories.interfaces;
 
 import it.sevenbits.quiz.core.model.Question;
 

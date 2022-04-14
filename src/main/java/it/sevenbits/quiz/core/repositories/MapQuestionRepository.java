@@ -2,6 +2,7 @@ package it.sevenbits.quiz.core.repositories;
 
 import it.sevenbits.quiz.core.model.Answer;
 import it.sevenbits.quiz.core.model.Question;
+import it.sevenbits.quiz.core.repositories.interfaces.IQuestionRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

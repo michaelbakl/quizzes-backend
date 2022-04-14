@@ -1,15 +1,17 @@
 package it.sevenbits.quiz.core.services;
 
 import it.sevenbits.quiz.core.model.Answer;
-import it.sevenbits.quiz.core.repositories.IGameRepository;
-import it.sevenbits.quiz.core.repositories.IQuestionRepository;
-import it.sevenbits.web.dto.responses.GetQuestionResponse;
-import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.web.dto.responses.StartGameDtoResponse;
+import it.sevenbits.quiz.core.repositories.interfaces.IGameRepository;
+import it.sevenbits.quiz.core.repositories.interfaces.IQuestionRepository;
+import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
 import it.sevenbits.quiz.core.repositories.GameRepository;
 import it.sevenbits.quiz.core.repositories.MapQuestionRepository;
+import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
+import it.sevenbits.web.dto.responses.GameStatusResponse;
+import it.sevenbits.web.dto.responses.GetQuestionResponse;
+import it.sevenbits.web.dto.responses.StartGameDtoResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -31,13 +33,14 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public StartGameDtoResponse startGame() {
+    public StartGameDtoResponse startGame(final String roomId) {
         int ten = 2 + 2 + 2 + 2 + 2;
-        Game game = gameRepository.getGame();
+        Game game = new Game(ten);
         game.setScore(0);
         game.setQuestionsIds(questionRepository.getListOfRandomQuestionsIds(ten));
         game.setQuestionsAmount(ten);
         game.setCurrentIdPos(0);
+        gameRepository.createGame(roomId, game);
         return new StartGameDtoResponse(game.getCurrentQuestionId());
     }
 
@@ -53,19 +56,27 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public AnswerQuestionResponse sendAnswer(final String questionId, final String answerID) {
+    public AnswerQuestionResponse sendAnswer(final String roomId, final String questionId, final String answerID) {
         Question currentQuestion = questionRepository.getQuestion(questionId);
         int result = 0;
         if (checkAnswerCorrect(currentQuestion, answerID)) {
             result = currentQuestion.getCorrectAnswer().getPoints();
-            gameRepository.updateGameScore(result);
+            gameRepository.updateGameScore(result, roomId);
         }
         return new AnswerQuestionResponse(
                 currentQuestion.getCorrectAnswer().getAnswerId(),
-                gameRepository.getNextQuestionId(),
-                gameRepository.getGameScore(),
+                gameRepository.getNextQuestionId(roomId),
+                gameRepository.getGameScore(roomId),
                 result
         );
+    }
+
+    @Override
+    public GameStatusResponse getGameStatus(final String roomId) {
+        return new GameStatusResponse("ok",
+                gameRepository.getIdOfCurrentQuestion(roomId),
+                gameRepository.getGame(roomId).getCurrentIdPos(),
+                gameRepository.getGame(roomId).getQuestionsAmount());
     }
 
     private boolean checkAnswerCorrect(final Question question, final String answerId) {
