@@ -1,8 +1,11 @@
 package it.sevenbits.quiz.core.services;
 
 import it.sevenbits.quiz.core.model.Answer;
+import it.sevenbits.quiz.core.model.Player;
+import it.sevenbits.quiz.core.repositories.RoomRepository;
 import it.sevenbits.quiz.core.repositories.interfaces.IGameRepository;
 import it.sevenbits.quiz.core.repositories.interfaces.IQuestionRepository;
+import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
@@ -23,6 +26,7 @@ import java.util.Objects;
 public class GameService implements IGameService {
     private final IGameRepository gameRepository;
     private final IQuestionRepository questionRepository;
+    private final IRoomRepository roomRepository;
 
     /**
      * constructor
@@ -30,6 +34,7 @@ public class GameService implements IGameService {
     public GameService() {
         this.gameRepository = GameRepository.getGameRepository();
         this.questionRepository = MapQuestionRepository.getQuestionRepository();
+        this.roomRepository = RoomRepository.getRepository();
     }
 
     @Override
@@ -56,12 +61,17 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public AnswerQuestionResponse sendAnswer(final String roomId, final String questionId, final String answerID) {
+    public AnswerQuestionResponse sendAnswer(final String roomId,
+                                             final String playerId,
+                                             final String questionId,
+                                             final String answerID
+    ) {
         Question currentQuestion = questionRepository.getQuestion(questionId);
         int result = 0;
-        if (checkAnswerCorrect(currentQuestion, answerID)) {
+        if (checkPlayerIsInRoom(roomId, playerId) && checkAnswerCorrect(currentQuestion, answerID)) {
             result = currentQuestion.getCorrectAnswer().getPoints();
             gameRepository.updateGameScore(result, roomId);
+            roomRepository.updatePlayerScore(roomId, playerId, result);
         }
         return new AnswerQuestionResponse(
                 currentQuestion.getCorrectAnswer().getAnswerId(),
@@ -81,5 +91,9 @@ public class GameService implements IGameService {
 
     private boolean checkAnswerCorrect(final Question question, final String answerId) {
         return Objects.equals(question.getCorrectAnswer().getAnswerId(), answerId);
+    }
+
+    private boolean checkPlayerIsInRoom(final String roomId, final String playerId) {
+        return roomRepository.getRoomById(roomId).getPlayers().contains(new Player(playerId));
     }
 }

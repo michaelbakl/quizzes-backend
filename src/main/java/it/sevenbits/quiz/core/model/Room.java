@@ -69,4 +69,19 @@ public class Room {
   public void addPlayer(final Player player) {
     players.add(player);
   }
+
+  /**
+   * return player by his id
+   * @param playerId - String
+   * @return player
+   */
+  public Player getPlayerById(final String playerId) {
+    for (Player player: players) {
+      if (player.getPlayerId().equals(playerId)) {
+        return player;
+      }
+    }
+    return null;
+  }
+
 }

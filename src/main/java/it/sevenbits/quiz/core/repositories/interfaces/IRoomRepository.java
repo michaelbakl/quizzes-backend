@@ -35,4 +35,10 @@ public interface IRoomRepository {
    * @param playerId - String
    */
   void addPlayer(String roomId, String playerId);
+
+  /**
+   * update player score method
+   * @param score - int
+   */
+  void updatePlayerScore(String roomId, String playerId, int score);
 }

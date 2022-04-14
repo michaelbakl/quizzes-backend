@@ -30,7 +30,7 @@ public interface IGameService {
    * @param answerID - String
    * @return AnswerQuestionResponse
    */
-  AnswerQuestionResponse sendAnswer(String roomId, String questionId, String answerID);
+  AnswerQuestionResponse sendAnswer(String roomId, String playerId, String questionId, String answerID);
 
   /**
    *

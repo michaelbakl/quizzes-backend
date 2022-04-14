@@ -56,4 +56,9 @@ public final class RoomRepository implements IRoomRepository {
     getRoomById(roomId).addPlayer(new Player(playerId));
   }
 
+  @Override
+  public void updatePlayerScore(final String roomId, final String playerId, final int score) {
+    rooms.get(roomId).getPlayerById(playerId).updatePoints(score);
+  }
+
 }
