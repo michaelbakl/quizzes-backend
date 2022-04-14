@@ -26,9 +26,10 @@ public interface IGameService {
   /**
    * send answer method
    * @param roomId - String
+   * @param playerId - String
    * @param questionId - String
    * @param answerID - String
-   * @return AnswerQuestionResponse
+   * @return answer question response
    */
   AnswerQuestionResponse sendAnswer(String roomId, String playerId, String questionId, String answerID);
 
@@ -38,20 +39,5 @@ public interface IGameService {
    * @return GameStatusResponse
    */
   GameStatusResponse getGameStatus(String roomId);
-
-//  /**
-//   *
-//   * @return
-//   */
-//  GetRoomInfoResponse getRoomInfo();
-//
-//  /**
-//   *
-//   * @return
-//   */
-//  GetRoomResponse getRoom();
-
-
-
 
 }
