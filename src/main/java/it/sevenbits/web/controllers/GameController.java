@@ -36,9 +36,9 @@ public class GameController {
 
     /**
      * startGame method
+     * @param roomId - String
      * @return StartGameDtoResponse
      */
-    @SuppressWarnings("checkstyle:JavadocMethod")
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
         try {
@@ -70,10 +70,10 @@ public class GameController {
     /**
      * 
      * @param questionId - String
+     * @param roomId - String
      * @param answerQuestionRequest - AnswerQuestionRequest
      * @return ResponseEntity
      */
-    @SuppressWarnings("checkstyle:JavadocMethod")
     @RequestMapping(value = "/question/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<AnswerQuestionResponse> sendAnswer(@RequestBody final AnswerQuestionRequest

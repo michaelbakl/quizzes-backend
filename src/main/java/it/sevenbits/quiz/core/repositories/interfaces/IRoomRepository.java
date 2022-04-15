@@ -37,8 +37,10 @@ public interface IRoomRepository {
   void addPlayer(String roomId, String playerId);
 
   /**
-   * update player score method
-   * @param score - int
+   * adds score to player`s score
+   * @param roomId - String
+   * @param playerId - String
+   * @param score - String
    */
   void updatePlayerScore(String roomId, String playerId, int score);
 }
