@@ -14,25 +14,15 @@ import java.util.Map;
  * room repository
  */
 @Repository
-public final class RoomRepository implements IRoomRepository {
-
-  private static RoomRepository repository;
+public class RoomRepository implements IRoomRepository {
   private final Map<String, Room> rooms;
 
-  private RoomRepository() {
-    rooms = new HashMap<>();
-  }
-
   /**
-   * singlton getter
-   *
-   * @return RoomRepository
+   * constructor
    */
-  public static RoomRepository getRepository() {
-    if (repository == null) {
-      repository = new RoomRepository();
-    }
-    return repository;
+  public
+  RoomRepository() {
+    rooms = new HashMap<>();
   }
 
   @Override

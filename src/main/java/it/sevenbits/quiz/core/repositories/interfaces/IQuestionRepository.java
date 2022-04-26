@@ -16,7 +16,7 @@ public interface IQuestionRepository {
     Question getQuestion(String id);
 
     /**
-     * gett for random question
+     * getter for random question
      * @return Question
      */
     Question getRandomQuestion();

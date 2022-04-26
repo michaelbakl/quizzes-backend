@@ -32,4 +32,16 @@ public class GetRoomResponse {
     this.roomName = roomName;
     this.players = players;
   }
+
+  public String getRoomId() {
+    return roomId;
+  }
+
+  public String getRoomName() {
+    return roomName;
+  }
+
+  public List<Player> getPlayers() {
+    return players;
+  }
 }

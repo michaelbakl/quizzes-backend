@@ -11,28 +11,14 @@ import java.util.Map;
  * implementation of IGameRepository
  */
 @Repository
-public final class GameRepository implements IGameRepository {
-    private static GameRepository gameRepository;
-    //private final Game game;
+public class GameRepository implements IGameRepository {
     private final Map<String, Game> gameMap;
 
     /**
      * constructor
      */
-    @SuppressWarnings("checkstyle:MagicNumber")
-    private GameRepository() {
+    public GameRepository() {
         gameMap = new HashMap<>();
-    }
-
-    /**
-     * singlton method
-     * @return GameRepository
-     */
-    public static GameRepository getGameRepository() {
-        if (gameRepository == null) {
-            gameRepository = new GameRepository();
-        }
-        return gameRepository;
     }
 
     @Override

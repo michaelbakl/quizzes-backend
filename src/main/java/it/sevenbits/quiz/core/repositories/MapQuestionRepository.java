@@ -17,32 +17,19 @@ import java.util.UUID;
  * question repository implementation
  */
 @Repository
-public final class MapQuestionRepository implements IQuestionRepository {
-    private static MapQuestionRepository mapQuestionRepository;
+public class MapQuestionRepository implements IQuestionRepository {
     private final Map<String, Question> questionsMap;
     private final Random random;
 
     /**
      * constructor
      */
-    private MapQuestionRepository() {
+    public MapQuestionRepository() {
         questionsMap = new HashMap<>();
         random = new Random();
         fillMapWithQuestionsForTest();
     }
 
-    /**
-     * singlton method
-     * @return MapQuestionRepository
-     */
-    public static MapQuestionRepository getQuestionRepository() {
-        if (mapQuestionRepository == null) {
-            mapQuestionRepository = new MapQuestionRepository();
-        }
-        return mapQuestionRepository;
-    }
-
-    @SuppressWarnings("checkstyle:MagicNumber")
     private void fillMapWithQuestionsForTest() {
         int twenty = 2 * 2 * 2 * 2 + 2 + 2;
         for (int i = 0; i < twenty; i++) {

@@ -1,16 +1,12 @@
 package it.sevenbits.quiz.core.services;
 
 import it.sevenbits.quiz.core.model.Answer;
-import it.sevenbits.quiz.core.model.Player;
-import it.sevenbits.quiz.core.repositories.RoomRepository;
 import it.sevenbits.quiz.core.repositories.interfaces.IGameRepository;
 import it.sevenbits.quiz.core.repositories.interfaces.IQuestionRepository;
 import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
-import it.sevenbits.quiz.core.repositories.GameRepository;
-import it.sevenbits.quiz.core.repositories.MapQuestionRepository;
 import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
 import it.sevenbits.web.dto.responses.GameStatusResponse;
 import it.sevenbits.web.dto.responses.GetQuestionResponse;
@@ -29,17 +25,22 @@ public class GameService implements IGameService {
     private final IRoomRepository roomRepository;
 
     /**
-     * constructor
+     * constructor for GameService
+     * @param gameRepository - repo for games
+     * @param questionRepository - repo for questions
+     * @param roomRepository - repo for rooms
      */
-    public GameService() {
-        this.gameRepository = GameRepository.getGameRepository();
-        this.questionRepository = MapQuestionRepository.getQuestionRepository();
-        this.roomRepository = RoomRepository.getRepository();
+    public GameService(final IGameRepository gameRepository,
+                       final IQuestionRepository questionRepository,
+                       final IRoomRepository roomRepository) {
+        this.gameRepository = gameRepository;
+        this.questionRepository = questionRepository;
+        this.roomRepository = roomRepository;
     }
 
     @Override
     public StartGameDtoResponse startGame(final String roomId) {
-        int ten = 2 + 2 + 2 + 2 + 2;
+        final int ten = 10;
         Game game = new Game(ten);
         game.setScore(0);
         game.setQuestionsIds(questionRepository.getListOfRandomQuestionsIds(ten));
@@ -94,6 +95,6 @@ public class GameService implements IGameService {
     }
 
     private boolean checkPlayerIsInRoom(final String roomId, final String playerId) {
-        return roomRepository.getRoomById(roomId).getPlayers().contains(new Player(playerId));
+        return roomRepository.getRoomById(roomId).getPlayerById(playerId) != null;
     }
 }

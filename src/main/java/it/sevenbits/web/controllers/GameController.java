@@ -35,7 +35,7 @@ public class GameController {
     }
 
     /**
-     * startGame method
+     * starts game
      * @param roomId - String
      * @return StartGameDtoResponse
      */
@@ -50,7 +50,7 @@ public class GameController {
     }
 
     /**
-     *
+     * get question method: gets question from repository and returns it
      * @param roomId - String
      * @param questionId - String
      * @return GetQuestionResponse
@@ -68,7 +68,7 @@ public class GameController {
     }
 
     /**
-     * 
+     * sends answer to a question
      * @param questionId - String
      * @param roomId - String
      * @param answerQuestionRequest - AnswerQuestionRequest
@@ -94,7 +94,7 @@ public class GameController {
     }
 
     /**
-     *
+     * gets game status
      * @param roomId - String
      * @return GameStatusResponse
      */

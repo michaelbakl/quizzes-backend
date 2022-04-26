@@ -1,5 +1,8 @@
 package it.sevenbits.web.configs;
 
+import it.sevenbits.quiz.core.repositories.interfaces.IGameRepository;
+import it.sevenbits.quiz.core.repositories.interfaces.IQuestionRepository;
+import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
 import it.sevenbits.quiz.core.services.GameService;
 import it.sevenbits.quiz.core.services.RoomService;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
@@ -13,21 +16,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServiceConfig {
     /**
-     * Bean for IGameService
-     *
-     * @return IGameService
+     * bean for IGameService
+     * @param gameRepository - repo for games
+     * @param questionRepository - repo for questions
+     * @param roomRepository - repo for rooms
+     * @return implementation of interface IGameService
      */
     @Bean
-    public IGameService gameService() {
-        return new GameService();
+    public IGameService gameService(final IGameRepository gameRepository,
+                                    final IQuestionRepository questionRepository,
+                                    final IRoomRepository roomRepository) {
+        return new GameService(gameRepository, questionRepository, roomRepository);
     }
 
     /**
-     * Bean for IRoomServic e
-     * @return IRoomService
+     * bean for IRoomService
+     * @param roomRepository - room repo
+     * @return implementation of interface IRoomService
      */
     @Bean
-    public IRoomService roomService() {
-        return new RoomService();
+    public IRoomService roomService(final IRoomRepository roomRepository) {
+        return new RoomService(roomRepository);
     }
 }

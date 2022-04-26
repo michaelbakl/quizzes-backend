@@ -1,7 +1,6 @@
 package it.sevenbits.quiz.core.services;
 
 import it.sevenbits.quiz.core.model.Room;
-import it.sevenbits.quiz.core.repositories.RoomRepository;
 import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.web.dto.responses.GetRoomResponse;
@@ -16,10 +15,11 @@ public class RoomService implements IRoomService {
   private final IRoomRepository roomRepository;
 
   /**
-   * constructor
+   * constructor for RoomService
+   * @param roomRepository - room repo from bean
    */
-  public RoomService() {
-    this.roomRepository = RoomRepository.getRepository();
+  public RoomService(final IRoomRepository roomRepository) {
+    this.roomRepository = roomRepository;
   }
 
   @Override
