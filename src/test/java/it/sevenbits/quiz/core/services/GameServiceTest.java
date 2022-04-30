@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.services;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Answer;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
@@ -40,7 +41,7 @@ public class GameServiceTest {
   }
 
   @Test
-  public void startGame() {
+  public void startGame() throws QuizException {
     List<String> list = new ArrayList<>();
     list.add("1");
     when(mockQuestionRepository.getListOfRandomQuestionsIds(anyInt())).thenReturn(list);
@@ -50,7 +51,7 @@ public class GameServiceTest {
   }
 
   @Test
-  public void getQuestion() {
+  public void getQuestion() throws QuizException {
     Question mockQuestion = mock(Question.class);
     List<Answer> mockList = mock(List.class);
     when(mockQuestionRepository.getQuestion(anyString())).thenReturn(mockQuestion);
@@ -61,7 +62,7 @@ public class GameServiceTest {
   }
 
   @Test
-  public void sendAnswer() {
+  public void sendAnswer() throws QuizException {
     Question mockQuestion = mock(Question.class);
     when(mockQuestionRepository.getQuestion(anyString())).thenReturn(mockQuestion);
     String roomId = "roomId";
@@ -83,7 +84,7 @@ public class GameServiceTest {
   }
 
   @Test
-  public void getGameStatus() {
+  public void getGameStatus() throws QuizException {
     Question mockQuestion = mock(Question.class);
     Game mockGame = mock(Game.class);
     when(mockQuestionRepository.getQuestion(anyString())).thenReturn(mockQuestion);

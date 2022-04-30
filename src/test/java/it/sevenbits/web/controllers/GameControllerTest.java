@@ -1,5 +1,6 @@
 package it.sevenbits.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.GameService;
 import it.sevenbits.quiz.core.services.RoomService;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
@@ -26,7 +27,7 @@ public class GameControllerTest {
   }
 
   @Test
-  public void startGame() {
+  public void startGame() throws QuizException {
     StartGameDtoResponse mockResponse = mock(StartGameDtoResponse.class);
     when(mockService.startGame(anyString())).thenReturn(mockResponse);
 
@@ -38,7 +39,7 @@ public class GameControllerTest {
   }
 
   @Test
-  public void getQuestion() {
+  public void getQuestion() throws QuizException {
     GetQuestionResponse mockResponse = mock(GetQuestionResponse.class);
     when(mockService.getQuestion(anyString())).thenReturn(mockResponse);
 
@@ -50,7 +51,7 @@ public class GameControllerTest {
   }
 
   @Test
-  public void sendAnswer() {
+  public void sendAnswer() throws QuizException {
     AnswerQuestionResponse mockResponse = mock(AnswerQuestionResponse.class);
     when(mockService.sendAnswer(anyString(), anyString(), anyString(), anyString())).thenReturn(mockResponse);
     AnswerQuestionRequest request = new AnswerQuestionRequest("1", "1");
@@ -63,7 +64,7 @@ public class GameControllerTest {
   }
 
   @Test
-  public void getGameStatus() {
+  public void getGameStatus() throws QuizException {
     GameStatusResponse mockResponse = mock(GameStatusResponse.class);
     when(mockService.getGameStatus(anyString())).thenReturn(mockResponse);
     ResponseEntity<GameStatusResponse> answer = gameController.getGameStatus("1");

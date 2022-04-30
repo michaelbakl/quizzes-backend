@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,5 +56,16 @@ public class Question {
 
     public void setCorrectAnswer(final Answer correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    /**
+     * @return list of answers ids
+     */
+    public List<String> getAnswersIds() {
+        List<String> result = new ArrayList<>();
+        for (Answer answer: answers) {
+            result.add(answer.getAnswerId());
+        }
+        return result;
     }
 }

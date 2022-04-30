@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.services;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Player;
 import it.sevenbits.quiz.core.model.Room;
 import it.sevenbits.quiz.core.repositories.RoomRepository;
@@ -38,7 +39,7 @@ public class RoomServiceTest {
   }
 
   @Test
-  public void createRoom() {
+  public void createRoom() throws QuizException {
     Room mockRoom = mock(Room.class);
     List<Player> mockList = mock(List.class);
     when(mockRoomRepository.getRoomById(anyString())).thenReturn(mockRoom);
@@ -67,7 +68,7 @@ public class RoomServiceTest {
   }
 
   @Test
-  public void joinRoom() {
+  public void joinRoom() throws QuizException {
     Room mockRoom = mock(Room.class);
     List<Player> mockList = mock(List.class);
     when(mockRoomRepository.getRoomById(anyString())).thenReturn(mockRoom);

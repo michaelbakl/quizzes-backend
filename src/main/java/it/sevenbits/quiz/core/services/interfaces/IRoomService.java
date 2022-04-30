@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.services.interfaces;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.web.dto.responses.GetRoomResponse;
 import it.sevenbits.web.dto.responses.GetRoomsResponse;
 
@@ -17,19 +18,21 @@ public interface IRoomService {
   /**
    * creates room
    *
-   * @param roomId - String
-   * @param roomName - String
+   * @param roomId - room id
+   * @param roomName - room name
    * @return GetRoomResponse
+   * * @throws QuizException - exception
    */
-  GetRoomResponse createRoom(String roomId, String roomName);
+  GetRoomResponse createRoom(String roomId, String roomName) throws QuizException;
 
   /**
    * get room by id
    *
-   * @param roomId - String
+   * @param roomId - room id
    * @return GetRoomResponse
+   * @throws QuizException - exception
    */
-  GetRoomResponse getRoomById(String roomId);
+  GetRoomResponse getRoomById(String roomId) throws QuizException;
 
   /**
    * join room method
@@ -37,7 +40,9 @@ public interface IRoomService {
    * @param roomId - String
    * @param playerId - String
    * @return GetRoomResponse
+   * @throws QuizException - exception
    */
-  GetRoomResponse joinRoom(String roomId, String playerId);
+  GetRoomResponse joinRoom(String roomId, String playerId) throws QuizException;
+
 
 }

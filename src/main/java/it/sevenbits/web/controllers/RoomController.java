@@ -1,5 +1,6 @@
 package it.sevenbits.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.web.dto.requests.CreateRoomRequest;
 import it.sevenbits.web.dto.requests.JoinRoomRequest;
@@ -43,7 +44,7 @@ public class RoomController {
       GetRoomsResponse response = roomService.getAllRooms();
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response.getResponse());
     } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
@@ -58,8 +59,8 @@ public class RoomController {
     try {
       GetRoomResponse response = roomService.createRoom(request.getPlayerId(), request.getRoomName());
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (QuizException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
   }
 
@@ -74,8 +75,8 @@ public class RoomController {
     try {
       GetRoomResponse response = roomService.getRoomById(roomId);
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (QuizException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
@@ -91,8 +92,8 @@ public class RoomController {
     try {
       GetRoomResponse response = roomService.joinRoom(roomId, request.getPlayerId());
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (QuizException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
   }
 

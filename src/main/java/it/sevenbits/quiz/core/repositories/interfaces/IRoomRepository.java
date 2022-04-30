@@ -43,4 +43,11 @@ public interface IRoomRepository {
    * @param score - String
    */
   void updatePlayerScore(String roomId, String playerId, int score);
+
+  /**
+   * checks if room is in repository
+   * @param roomId - room id
+   * @return true if room exists, false otherwise
+   */
+  boolean checkRoomIsInRepository(String roomId);
 }

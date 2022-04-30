@@ -51,4 +51,9 @@ public class RoomRepository implements IRoomRepository {
     rooms.get(roomId).getPlayerById(playerId).updatePoints(score);
   }
 
+ @Override
+  public boolean checkRoomIsInRepository(final String roomId) {
+    return rooms.get(roomId) != null;
+  }
+
 }

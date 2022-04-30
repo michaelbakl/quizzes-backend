@@ -12,6 +12,8 @@ public class Game {
     private List<String> questionsIds;
     private int currentIdPos;
 
+    private String status;
+
     /**
      * constructor
      *
@@ -23,6 +25,7 @@ public class Game {
         this.questionsAmount = questionsAmount;
         questionsIds = new ArrayList<>();
         currentIdPos = 0;
+        status = "new";
     }
 
     /**
@@ -84,5 +87,13 @@ public class Game {
         } else {
             return "";
         }
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
     }
 }

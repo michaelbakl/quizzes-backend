@@ -1,5 +1,7 @@
 package it.sevenbits.quiz.core.services;
 
+import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Room;
 import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
@@ -28,7 +30,10 @@ public class RoomService implements IRoomService {
   }
 
   @Override
-  public GetRoomResponse createRoom(final String roomId, final String roomName) {
+  public GetRoomResponse createRoom(final String roomId, final String roomName) throws QuizException {
+    if (roomId == null || roomName == null || roomId.equals("") || roomName.equals("")) {
+      throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+    }
     roomRepository.createRoom(roomId, roomName);
     return new GetRoomResponse(roomId, roomName, roomRepository.getRoomById(roomId).getPlayers());
   }
@@ -43,11 +48,18 @@ public class RoomService implements IRoomService {
   }
 
   @Override
-  public GetRoomResponse joinRoom(final String roomId, final String playerId) {
+  public GetRoomResponse joinRoom(final String roomId, final String playerId) throws QuizException {
+    if (!checkRoomIsInRepo(roomId)) {
+      throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
+    }
     roomRepository.addPlayer(roomId, playerId);
     return new GetRoomResponse(roomId,
             roomRepository.getRoomById(roomId).getRoomName(),
             roomRepository.getRoomById(roomId).getPlayers());
+  }
+
+  private boolean checkRoomIsInRepo(final String roomId) {
+    return roomRepository.checkRoomIsInRepository(roomId);
   }
 
 

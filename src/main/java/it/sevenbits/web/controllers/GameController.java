@@ -1,5 +1,6 @@
 package it.sevenbits.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.web.dto.requests.AnswerQuestionRequest;
 import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
@@ -44,8 +45,8 @@ public class GameController {
         try {
             StartGameDtoResponse response = gameService.startGame(roomId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (QuizException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -62,8 +63,8 @@ public class GameController {
         try {
             GetQuestionResponse questionResponse = gameService.getQuestion(questionId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(questionResponse);
-        } catch (Exception e) {
-            return null;
+        } catch (QuizException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -88,8 +89,8 @@ public class GameController {
                             questionId,
                             answerQuestionRequest.getAnswerId());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (QuizException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -104,10 +105,10 @@ public class GameController {
         try {
             GameStatusResponse gameStatusResponse = gameService.getGameStatus(roomId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
-        } catch (Exception e) {
+        } catch (QuizException e) {
             GameStatusResponse gameStatusResponse =
                     new GameStatusResponse("INVALID", "INNVALID", -1, -1);
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
         }
     }
 
