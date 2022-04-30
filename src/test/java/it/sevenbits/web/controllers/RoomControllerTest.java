@@ -1,5 +1,6 @@
 package it.sevenbits.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.RoomService;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.web.dto.requests.CreateRoomRequest;
@@ -44,7 +45,7 @@ public class RoomControllerTest {
   }
 
   @Test
-  public void createRoom() {
+  public void createRoom() throws QuizException {
     GetRoomResponse mockResponse = mock(GetRoomResponse.class);
     CreateRoomRequest request = new CreateRoomRequest("1", "1");
     when(mockService.createRoom(anyString(), anyString())).thenReturn(mockResponse);
@@ -56,7 +57,7 @@ public class RoomControllerTest {
   }
 
   @Test
-  public void getRoom() {
+  public void getRoom() throws QuizException {
     GetRoomResponse mockResponse = mock(GetRoomResponse.class);
 
     when(mockService.getRoomById(anyString())).thenReturn(mockResponse);
@@ -69,7 +70,7 @@ public class RoomControllerTest {
   }
 
   @Test
-  public void joinRoom() {
+  public void joinRoom() throws QuizException {
     GetRoomResponse mockResponse = mock(GetRoomResponse.class);
     JoinRoomRequest request = new JoinRoomRequest("1");
 

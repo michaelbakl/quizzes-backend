@@ -74,6 +74,7 @@ public class RoomServiceTest {
     when(mockRoomRepository.getRoomById(anyString())).thenReturn(mockRoom);
     when(mockRoom.getRoomName()).thenReturn("name");
     when(mockRoom.getPlayers()).thenReturn(mockList);
+    when(mockRoomRepository.checkRoomIsInRepository(anyString())).thenReturn(true);
 
     GetRoomResponse response = roomService.joinRoom("1", "pl1");
 

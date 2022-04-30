@@ -42,6 +42,9 @@ public class GameService implements IGameService {
 
     @Override
     public StartGameDtoResponse startGame(final String roomId) throws QuizException {
+        if (!checkRoomIsInRepo(roomId)) {
+            throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
+        }
         final int ten = 10;
         Game game = new Game(ten);
         game.setScore(0);
@@ -49,9 +52,6 @@ public class GameService implements IGameService {
         game.setQuestionsAmount(ten);
         game.setCurrentIdPos(0);
         game.setStatus("Started");
-        if (!checkRoomIsInRepo(roomId)) {
-            throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
-        }
         gameRepository.createGame(roomId, game);
         return new StartGameDtoResponse(game.getCurrentQuestionId());
     }

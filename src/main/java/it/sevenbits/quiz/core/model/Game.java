@@ -38,6 +38,7 @@ public class Game {
         this.questionsAmount = questionsAmount;
         questionsIds = new ArrayList<>();
         currentIdPos = 0;
+        status = "new";
     }
 
     public int getScore() {

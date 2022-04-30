@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -45,6 +44,7 @@ public class GameServiceTest {
     List<String> list = new ArrayList<>();
     list.add("1");
     when(mockQuestionRepository.getListOfRandomQuestionsIds(anyInt())).thenReturn(list);
+    when(mockRoomRepository.checkRoomIsInRepository(anyString())).thenReturn(true);
 
     StartGameDtoResponse response = gameService.startGame("1");
     assertNotNull(response.getQuestionId());
@@ -65,15 +65,21 @@ public class GameServiceTest {
   public void sendAnswer() throws QuizException {
     Question mockQuestion = mock(Question.class);
     when(mockQuestionRepository.getQuestion(anyString())).thenReturn(mockQuestion);
+    when(mockRoomRepository.checkRoomIsInRepository(anyString())).thenReturn(true);
     String roomId = "roomId";
     List<String> list = new ArrayList<>();
     list.add("1");
+    List<String> answers = new ArrayList<>();
+    answers.add("answerId");
     when(mockQuestionRepository.getListOfRandomQuestionsIds(anyInt())).thenReturn(list);
     gameService.startGame(roomId);
     when(mockQuestion.getCorrectAnswer()).thenReturn(new Answer("answerId", "dlmd", 10));
     when(mockRoomRepository.getRoomById(anyString())).thenReturn(new Room(roomId, roomId));
     when(mockGameRepository.getNextQuestionId(anyString())).thenReturn("Next");
     when(mockGameRepository.getGameScore(anyString())).thenReturn(10);
+    when(mockQuestionRepository.getQuestion(anyString())).thenReturn(mockQuestion);
+    when(mockRoomRepository.checkRoomIsInRepository(anyString())).thenReturn(true);
+    when(mockQuestion.getAnswersIds()).thenReturn(answers);
     
     AnswerQuestionResponse response = gameService.sendAnswer(roomId, roomId, "bj", "answerId");
 
@@ -88,6 +94,7 @@ public class GameServiceTest {
     Question mockQuestion = mock(Question.class);
     Game mockGame = mock(Game.class);
     when(mockQuestionRepository.getQuestion(anyString())).thenReturn(mockQuestion);
+    when(mockRoomRepository.checkRoomIsInRepository(anyString())).thenReturn(true);
     String roomId = "roomId";
     List<String> list = new ArrayList<>();
     list.add("1");
@@ -98,6 +105,7 @@ public class GameServiceTest {
     when(mockGameRepository.getGame(anyString())).thenReturn(mockGame);
     when(mockGame.getCurrentIdPos()).thenReturn(1);
     when(mockGame.getQuestionsAmount()).thenReturn(10);
+    when(mockGame.getStatus()).thenReturn("ok");
 
     GameStatusResponse response = gameService.getGameStatus(roomId);
 
