@@ -1,10 +1,10 @@
 package it.sevenbits.quiz.core.services.interfaces;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
-import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.web.dto.responses.GameStatusResponse;
-import it.sevenbits.web.dto.responses.GetQuestionResponse;
-import it.sevenbits.web.dto.responses.StartGameDtoResponse;
+import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
 
 /**
  * interface for game service

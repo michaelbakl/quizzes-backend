@@ -3,10 +3,10 @@ package it.sevenbits.quiz.core.services;
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Room;
-import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
+import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
-import it.sevenbits.web.dto.responses.GetRoomResponse;
-import it.sevenbits.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
 import org.springframework.stereotype.Service;
 
 /**

@@ -18,7 +18,10 @@ public enum QuizErrorCode {
   PLAYER_IS_NOT_IN_THE_ROOM("Player was not found in the room"),
   /**
    */
-  ANSWER_DOES_NOT_MATCH_QUESTION("Answer does not belong to the question player tries to answer");
+  ANSWER_DOES_NOT_MATCH_QUESTION("Answer does not belong to the question player tries to answer"),
+  /**
+   */
+  GAME_ALREADY_EXISTS("Game already exists in the room");
 
   private final String errorString;
 

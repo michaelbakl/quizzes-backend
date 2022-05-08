@@ -1,8 +1,8 @@
 package it.sevenbits.quiz.core.services.interfaces;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
-import it.sevenbits.web.dto.responses.GetRoomResponse;
-import it.sevenbits.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
 
 /**
  * interface for room service
