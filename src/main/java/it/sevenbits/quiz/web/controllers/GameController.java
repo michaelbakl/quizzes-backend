@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.web.dto.requests.AnswerQuestionRequest;
@@ -43,6 +44,9 @@ public class GameController {
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
         try {
+            if (!isUUID(roomId)) {
+                throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+            }
             StartGameDtoResponse response = gameService.startGame(roomId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (QuizException e) {
@@ -61,6 +65,9 @@ public class GameController {
     public ResponseEntity<GetQuestionResponse> getQuestion(@PathVariable("roomId") final String roomId,
                                                            @PathVariable("questionId") final String questionId) {
         try {
+            if (!isUUID(roomId) || !isUUID(questionId)) {
+                throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+            }
             GetQuestionResponse questionResponse = gameService.getQuestion(questionId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(questionResponse);
         } catch (QuizException e) {
@@ -83,6 +90,13 @@ public class GameController {
                                                              @PathVariable("questionId") final String questionId
                                                             ) {
         try {
+            if (!isUUID(roomId)
+                    || !isUUID(questionId)
+                    || !isUUID(answerQuestionRequest.getAnswerId())
+                    || !isUUID(answerQuestionRequest.getPlayerId())
+            ) {
+                throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+            }
             AnswerQuestionResponse response =
                     gameService.sendAnswer(roomId,
                             answerQuestionRequest.getPlayerId(),
@@ -103,6 +117,9 @@ public class GameController {
     @ResponseBody
     public ResponseEntity<GameStatusResponse> getGameStatus(@PathVariable("roomId") final String roomId) {
         try {
+            if (!isUUID(roomId)) {
+                throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+            }
             GameStatusResponse gameStatusResponse = gameService.getGameStatus(roomId);
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
         } catch (QuizException e) {
@@ -110,6 +127,14 @@ public class GameController {
                     new GameStatusResponse("INVALID", "INVALID", -1, -1);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(gameStatusResponse);
         }
+    }
+
+    private boolean isUUID(final String testUUID) {
+        if (testUUID == null) {
+            return false;
+        }
+        return java.util.regex.Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
+                .matcher(testUUID).find();
     }
 
 }

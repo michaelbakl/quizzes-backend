@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.quiz.web.dto.responses.GetRoomInfoResponse;
@@ -57,6 +58,9 @@ public class RoomController {
   @RequestMapping(method = RequestMethod.POST)
   ResponseEntity<GetRoomResponse> createRoom(@RequestBody final CreateRoomRequest request) {
     try {
+      if (!isUUID(request.getPlayerId())) {
+        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+      }
       GetRoomResponse response = roomService.createRoom(request.getPlayerId(), request.getRoomName());
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
@@ -73,6 +77,9 @@ public class RoomController {
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   ResponseEntity<GetRoomResponse> getRoom(@PathVariable("id") final String roomId) {
     try {
+      if (!isUUID(roomId)) {
+        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+      }
       GetRoomResponse response = roomService.getRoomById(roomId);
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
@@ -90,11 +97,22 @@ public class RoomController {
   ResponseEntity<GetRoomResponse> joinRoom(@RequestBody final JoinRoomRequest request,
                                            @PathVariable("id") final String roomId) {
     try {
+      if (!isUUID(roomId) || !isUUID(request.getPlayerId())) {
+        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+      }
       GetRoomResponse response = roomService.joinRoom(roomId, request.getPlayerId());
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+  }
+
+  private boolean isUUID(final String testUUID) {
+    if (testUUID == null) {
+      return false;
+    }
+    return java.util.regex.Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
+            .matcher(testUUID).find();
   }
 
 }
