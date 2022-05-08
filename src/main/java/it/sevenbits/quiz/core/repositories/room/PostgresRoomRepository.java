@@ -57,6 +57,10 @@ public class PostgresRoomRepository implements IRoomRepository {
 
   @Override
   public void addPlayer(final String roomId, final String playerId) {
+    if (!checkPlayerExists(playerId)) {
+      jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?)",
+              roomId, 0);
+    }
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
             roomId, playerId);
   }
