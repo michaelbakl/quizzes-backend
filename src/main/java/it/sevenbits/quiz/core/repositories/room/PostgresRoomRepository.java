@@ -80,10 +80,10 @@ public class PostgresRoomRepository implements IRoomRepository {
   }
 
 
-  private boolean checkPlayerExists(final String roomId) {
+  private boolean checkPlayerExists(final String playerId) {
     try {
       int checker = jdbcOperations.queryForObject("SELECT COUNT(playerid) AS counter FROM player WHERE playerid =?",
-              (resultSet, i) -> resultSet.getInt("counter"), roomId);
+              (resultSet, i) -> resultSet.getInt("counter"), playerId);
       return checker == 1;
     } catch (NullPointerException e) {
       return false;
