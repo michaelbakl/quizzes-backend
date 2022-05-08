@@ -56,7 +56,7 @@ public class PostgresRoomRepository implements IRoomRepository {
   @Override
   public void addPlayer(final String roomId, final String playerId) {
     jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing",
-              roomId, 0);
+              playerId, 0);
 
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
             roomId, playerId);
