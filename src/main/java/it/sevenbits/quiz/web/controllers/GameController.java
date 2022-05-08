@@ -8,6 +8,8 @@ import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
 import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
 import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
 import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/rooms/{roomId}/game")
 public class GameController {
+    Logger logger = LoggerFactory.getLogger(GameController.class);
 
     private final IGameService gameService;
 
@@ -48,6 +51,7 @@ public class GameController {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
             }
             StartGameDtoResponse response = gameService.startGame(roomId);
+            logger.info("Game started");
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (QuizException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -102,6 +106,8 @@ public class GameController {
                             answerQuestionRequest.getPlayerId(),
                             questionId,
                             answerQuestionRequest.getAnswerId());
+            logger.info("Answered: {}, {}, {}, {}", response.getCorrectAnswerId(),
+                    response.getQuestionId(), response.getQuestionScore(), response.getTotalScore());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (QuizException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
