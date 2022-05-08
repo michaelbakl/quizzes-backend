@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.config;
+package it.sevenbits.quiz.web.config;
 
 import it.sevenbits.quiz.core.repositories.game.PostgresGameRepository;
 import it.sevenbits.quiz.core.repositories.question.PostgresQuestionRepository;

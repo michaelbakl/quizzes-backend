@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.config;
+package it.sevenbits.quiz.web.config;
 
 import it.sevenbits.quiz.core.repositories.game.IGameRepository;
 import it.sevenbits.quiz.core.repositories.question.IQuestionRepository;

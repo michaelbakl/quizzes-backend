@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.config;
+package it.sevenbits.quiz.web.config;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseMigrationsConfig {
 
-  private DataSource dataSource;
+  private final DataSource dataSource;
 
   /**
    * constructor

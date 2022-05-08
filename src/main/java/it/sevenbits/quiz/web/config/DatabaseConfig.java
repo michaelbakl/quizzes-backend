@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.config;
+package it.sevenbits.quiz.web.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +46,7 @@ public class DatabaseConfig {
 
   /**
    * template
-   * @param dataSource - data sourse
+   * @param dataSource - data source
    * @return JdbcOperations
    */
   @Bean
