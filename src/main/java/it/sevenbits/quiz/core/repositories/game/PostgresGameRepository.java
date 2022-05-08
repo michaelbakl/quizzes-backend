@@ -23,16 +23,13 @@ public class PostgresGameRepository implements IGameRepository {
 
   @Override
   public Game getGame(final String roomId) {
-    Game game = jdbcOperations.queryForObject("SELECT * FROM game WHERE roomId = ?", (resultSet, i) ->
+    return jdbcOperations.queryForObject("SELECT * FROM game WHERE roomId = ?", (resultSet, i) ->
             new Game(resultSet.getInt("score"),
                     resultSet.getInt("questionsAmount"),
-                    new ArrayList<>(),
-                    resultSet.getInt("currentQuestionId"),
+                    getQuestionIds(roomId),
+                    getPositionNumberInList(getQuestionIds(roomId), resultSet.getString("currentQuestionId")),
                     resultSet.getString("status")
             ), roomId);
-    assert game != null;
-    game.setQuestionsIds(getQuestionIds(roomId));
-    return game;
   }
 
   @Override
@@ -102,6 +99,16 @@ public class PostgresGameRepository implements IGameRepository {
     List<String> questionsIds = jdbcOperations.query("SELECT questionId FROM questionstogame WHERE roomid = ? ORDER BY questionid",
             (resultSet, i) -> resultSet.getString("questionId"), roomId);
     return questionsIds;
+  }
+
+  private int getPositionNumberInList(final List<String> list, final String id) {
+    int i;
+    for (i = 0; i < list.size(); i++) {
+      if (list.get(i).equals(id)) {
+        return i;
+      }
+    }
+    return 0;
   }
 
 }
