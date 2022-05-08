@@ -1,6 +1,7 @@
-package it.sevenbits.quiz.core.repositories;
+package it.sevenbits.quiz.core.repositories.game;
 
 import it.sevenbits.quiz.core.model.Game;
+import it.sevenbits.quiz.core.repositories.game.GameRepository;
 import org.junit.Before;
 import org.junit.Test;
 

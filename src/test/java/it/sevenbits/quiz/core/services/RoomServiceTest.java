@@ -3,11 +3,10 @@ package it.sevenbits.quiz.core.services;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Player;
 import it.sevenbits.quiz.core.model.Room;
-import it.sevenbits.quiz.core.repositories.RoomRepository;
-import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
-import it.sevenbits.quiz.core.services.interfaces.IRoomService;
-import it.sevenbits.web.dto.responses.GetRoomResponse;
-import it.sevenbits.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.core.repositories.room.RoomRepository;
+import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
+import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,6 +1,7 @@
-package it.sevenbits.quiz.core.repositories;
+package it.sevenbits.quiz.core.repositories.question;
 
 import it.sevenbits.quiz.core.model.Question;
+import it.sevenbits.quiz.core.repositories.question.MapQuestionRepository;
 import org.junit.Before;
 import org.junit.Test;
 

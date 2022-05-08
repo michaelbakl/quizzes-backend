@@ -1,9 +1,8 @@
-package it.sevenbits.quiz.core.repositories;
+package it.sevenbits.quiz.core.repositories.room;
 
 import it.sevenbits.quiz.core.model.Player;
 import it.sevenbits.quiz.core.model.Room;
-import it.sevenbits.quiz.core.services.RoomService;
-import it.sevenbits.web.controllers.RoomController;
+import it.sevenbits.quiz.core.repositories.room.RoomRepository;
 import org.junit.Before;
 import org.junit.Test;
 

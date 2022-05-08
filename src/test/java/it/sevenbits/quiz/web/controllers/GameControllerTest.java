@@ -1,11 +1,14 @@
-package it.sevenbits.web.controllers;
+package it.sevenbits.quiz.web.controllers;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.GameService;
-import it.sevenbits.quiz.core.services.RoomService;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
-import it.sevenbits.web.dto.requests.AnswerQuestionRequest;
-import it.sevenbits.web.dto.responses.*;
+import it.sevenbits.quiz.web.controllers.GameController;
+import it.sevenbits.quiz.web.dto.requests.AnswerQuestionRequest;
+import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;

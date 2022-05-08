@@ -1,13 +1,14 @@
-package it.sevenbits.web.controllers;
+package it.sevenbits.quiz.web.controllers;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.RoomService;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
-import it.sevenbits.web.dto.requests.CreateRoomRequest;
-import it.sevenbits.web.dto.requests.JoinRoomRequest;
-import it.sevenbits.web.dto.responses.GetRoomInfoResponse;
-import it.sevenbits.web.dto.responses.GetRoomResponse;
-import it.sevenbits.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.web.controllers.RoomController;
+import it.sevenbits.quiz.web.dto.requests.CreateRoomRequest;
+import it.sevenbits.quiz.web.dto.requests.JoinRoomRequest;
+import it.sevenbits.quiz.web.dto.responses.GetRoomInfoResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
