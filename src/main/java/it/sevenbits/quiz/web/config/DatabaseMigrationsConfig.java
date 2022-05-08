@@ -34,7 +34,7 @@ public class DatabaseMigrationsConfig {
             .dataSource(this.dataSource)
             .table("flyway_schema")
             .baselineOnMigrate(true)
-            .locations("it/sevenbits/quiz/web/dto/migrations")
+            .locations("db/migrations")
             .load();
     try {
       flyway.migrate();
