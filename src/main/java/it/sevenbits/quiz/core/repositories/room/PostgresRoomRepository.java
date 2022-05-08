@@ -23,10 +23,8 @@ public class PostgresRoomRepository implements IRoomRepository {
 
   @Override
   public void createRoom(final String roomId, final String roomName) {
-    if (!checkPlayerExists(roomId)) {
-      jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?)",
+    jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing ",
               roomId, 0);
-    }
     jdbcOperations.update("INSERT INTO room (roomid, roomname) VALUES (?, ?)",
             roomId, roomName);
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
@@ -57,10 +55,9 @@ public class PostgresRoomRepository implements IRoomRepository {
 
   @Override
   public void addPlayer(final String roomId, final String playerId) {
-    if (!checkPlayerExists(playerId)) {
-      jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing",
+    jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing",
               roomId, 0);
-    }
+
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
             roomId, playerId);
   }
