@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/rooms/{roomId}/game")
 public class GameController {
-    Logger logger = LoggerFactory.getLogger(GameController.class);
+    private final Logger logger = LoggerFactory.getLogger(GameController.class);
 
     private final IGameService gameService;
 
