@@ -26,7 +26,7 @@ public class RoomRepository implements IRoomRepository {
 
   @Override
   public void createRoom(final String roomId, final String roomName) {
-    Room room = new Room(roomId, roomName);
+    Room room = new Room(roomId, roomName, roomId);
     rooms.put(roomId, room);
   }
 

@@ -3,11 +3,12 @@ package it.sevenbits.quiz.web.controllers;
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
-import it.sevenbits.quiz.web.dto.requests.AnswerQuestionRequest;
-import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
-import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
-import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
+import it.sevenbits.quiz.web.dto.requests.question.AnswerQuestionRequest;
+import it.sevenbits.quiz.web.dto.responses.game.StartGameDtoResponse;
+import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.game.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.question.GetQuestionResponse;
+import it.sevenbits.quiz.web.security.AuthRoleRequired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,7 @@ public class GameController {
      * @return StartGameDtoResponse
      */
     @RequestMapping(value = "/start", method = RequestMethod.POST)
+    @AuthRoleRequired("USER")
     ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
         try {
             if (!isUUID(roomId)) {
@@ -66,6 +68,7 @@ public class GameController {
      */
     @RequestMapping(value = "/question/{questionId}", method = RequestMethod.GET)
     @ResponseBody
+    @AuthRoleRequired("USER")
     public ResponseEntity<GetQuestionResponse> getQuestion(@PathVariable("roomId") final String roomId,
                                                            @PathVariable("questionId") final String questionId) {
         try {
@@ -88,6 +91,7 @@ public class GameController {
      */
     @RequestMapping(value = "/question/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
+    @AuthRoleRequired("USER")
     public ResponseEntity<AnswerQuestionResponse> sendAnswer(@RequestBody final AnswerQuestionRequest
                                                                         answerQuestionRequest,
                                                              @PathVariable("roomId") final String roomId,
@@ -121,6 +125,7 @@ public class GameController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
+    @AuthRoleRequired("USER")
     public ResponseEntity<GameStatusResponse> getGameStatus(@PathVariable("roomId") final String roomId) {
         try {
             if (!isUUID(roomId)) {

@@ -3,7 +3,6 @@ package it.sevenbits.quiz.core.repositories.game;
 import it.sevenbits.quiz.core.model.Game;
 import org.springframework.jdbc.core.JdbcOperations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -3,11 +3,12 @@ package it.sevenbits.quiz.web.controllers;
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
-import it.sevenbits.quiz.web.dto.responses.GetRoomInfoResponse;
-import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
-import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
-import it.sevenbits.quiz.web.dto.requests.CreateRoomRequest;
-import it.sevenbits.quiz.web.dto.requests.JoinRoomRequest;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomInfoResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomsResponse;
+import it.sevenbits.quiz.web.dto.requests.room.CreateRoomRequest;
+import it.sevenbits.quiz.web.dto.requests.room.JoinRoomRequest;
+import it.sevenbits.quiz.web.security.AuthRoleRequired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,7 @@ public class RoomController {
    * @return GetRoomsResponse
    */
   @RequestMapping(method = RequestMethod.GET)
+  @AuthRoleRequired("USER")
   ResponseEntity<GetRoomInfoResponse[]> getAllRooms() {
     try {
       GetRoomsResponse response = roomService.getAllRooms();
@@ -56,6 +58,7 @@ public class RoomController {
    * @return GetRoomsResponse
    */
   @RequestMapping(method = RequestMethod.POST)
+  @AuthRoleRequired("USER")
   ResponseEntity<GetRoomResponse> createRoom(@RequestBody final CreateRoomRequest request) {
     try {
       if (!isUUID(request.getPlayerId())) {
@@ -75,6 +78,7 @@ public class RoomController {
    * @return GetRoomsResponse
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  @AuthRoleRequired("USER")
   ResponseEntity<GetRoomResponse> getRoom(@PathVariable("id") final String roomId) {
     try {
       if (!isUUID(roomId)) {
@@ -94,6 +98,7 @@ public class RoomController {
    * @return GetRoomResponse
    */
   @RequestMapping(value = "/{id}/join", method = RequestMethod.POST)
+  @AuthRoleRequired("USER")
   ResponseEntity<GetRoomResponse> joinRoom(@RequestBody final JoinRoomRequest request,
                                            @PathVariable("id") final String roomId) {
     try {

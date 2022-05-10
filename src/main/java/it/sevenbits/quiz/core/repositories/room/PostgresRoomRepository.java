@@ -25,8 +25,8 @@ public class PostgresRoomRepository implements IRoomRepository {
   public void createRoom(final String roomId, final String roomName) {
     jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing ",
               roomId, 0);
-    jdbcOperations.update("INSERT INTO room (roomid, roomname) VALUES (?, ?)",
-            roomId, roomName);
+    jdbcOperations.update("INSERT INTO room (roomid, roomname, ownerId) VALUES (?, ?, ?)",
+            roomId, roomName, roomId);
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
             roomId, roomId);
   }
@@ -35,7 +35,8 @@ public class PostgresRoomRepository implements IRoomRepository {
   public List<Room> getAllRooms() {
     List<Room> rooms = jdbcOperations.query("SELECT * FROM room", (resultSet, i) ->
             new Room(resultSet.getString("roomid"),
-                    resultSet.getString("roomname")));
+                    resultSet.getString("roomname"),
+                    resultSet.getString("ownerid")));
     for (Room room: rooms) {
       room.setPlayers(getPlayersInRoom(room.getRoomId()));
     }
@@ -46,7 +47,8 @@ public class PostgresRoomRepository implements IRoomRepository {
   public Room getRoomById(final String roomId) {
     Room room = jdbcOperations.queryForObject("SELECT * FROM room WHERE roomId = ?", (resultSet, i) ->
             new Room(resultSet.getString("roomid"),
-                    resultSet.getString("roomname")), roomId);
+                    resultSet.getString("roomname"),
+                    resultSet.getString("ownerid")), roomId);
     assert room != null;
     List<Player> players = getPlayersInRoom(roomId);
     room.setPlayers(players);

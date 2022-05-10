@@ -1,12 +1,12 @@
-package it.sevenbits.quiz.core.services;
+package it.sevenbits.quiz.core.services.room;
 
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Room;
 import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
-import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
-import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomsResponse;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,16 +35,16 @@ public class RoomService implements IRoomService {
       throw new QuizException(QuizErrorCode.WRONG_INPUTS);
     }
     roomRepository.createRoom(roomId, roomName);
-    return new GetRoomResponse(roomId, roomName, roomRepository.getRoomById(roomId).getPlayers());
+    return new GetRoomResponse(roomId, roomName, roomId, roomRepository.getRoomById(roomId).getPlayers());
   }
 
   @Override
   public GetRoomResponse getRoomById(final String roomId) {
     Room room = roomRepository.getRoomById(roomId);
     if (room == null) {
-      room = new Room("Undefined", "Undefined");
+      room = new Room("Undefined", "Undefined", "Undefined");
     }
-    return new GetRoomResponse(room.getRoomId(), room.getRoomName(), room.getPlayers());
+    return new GetRoomResponse(room.getRoomId(), room.getRoomName(), room.getOwnerId(), room.getPlayers());
   }
 
   @Override
@@ -53,9 +53,11 @@ public class RoomService implements IRoomService {
       throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
     }
     roomRepository.addPlayer(roomId, playerId);
+    Room room = roomRepository.getRoomById(roomId);
     return new GetRoomResponse(roomId,
-            roomRepository.getRoomById(roomId).getRoomName(),
-            roomRepository.getRoomById(roomId).getPlayers());
+            room.getRoomName(),
+            room.getOwnerId(),
+            room.getPlayers());
   }
 
   private boolean checkRoomIsInRepo(final String roomId) {

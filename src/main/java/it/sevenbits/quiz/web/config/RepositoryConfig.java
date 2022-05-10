@@ -6,6 +6,8 @@ import it.sevenbits.quiz.core.repositories.room.PostgresRoomRepository;
 import it.sevenbits.quiz.core.repositories.game.IGameRepository;
 import it.sevenbits.quiz.core.repositories.question.IQuestionRepository;
 import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
+import it.sevenbits.quiz.core.repositories.user.IUserRepository;
+import it.sevenbits.quiz.core.repositories.user.PostgresUserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -44,6 +46,17 @@ public class RepositoryConfig {
   @Bean
   public IRoomRepository roomRepository(final JdbcOperations jdbcOperations) {
     return new PostgresRoomRepository(jdbcOperations);
+  }
+
+
+  /**
+   * configuration bean for IUserRepository
+   * @param jdbcOperations - jdbc
+   * @return IUserRepository - implementation of this interface
+   */
+  @Bean
+  public IUserRepository userRepository(final JdbcOperations jdbcOperations) {
+    return new PostgresUserRepository(jdbcOperations);
   }
 
 }

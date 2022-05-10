@@ -8,10 +8,11 @@ import it.sevenbits.quiz.core.model.Room;
 import it.sevenbits.quiz.core.repositories.game.GameRepository;
 import it.sevenbits.quiz.core.repositories.question.MapQuestionRepository;
 import it.sevenbits.quiz.core.repositories.room.RoomRepository;
-import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
-import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
-import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
+import it.sevenbits.quiz.core.services.game.GameService;
+import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.game.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.question.GetQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.game.StartGameDtoResponse;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.core.services;
+package it.sevenbits.quiz.core.services.game;
 
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
@@ -9,10 +9,10 @@ import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
-import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
-import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
-import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
+import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.game.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.question.GetQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.game.StartGameDtoResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
