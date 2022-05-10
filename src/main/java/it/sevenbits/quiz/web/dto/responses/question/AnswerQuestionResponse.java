@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.web.dto.responses;
+package it.sevenbits.quiz.web.dto.responses.question;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

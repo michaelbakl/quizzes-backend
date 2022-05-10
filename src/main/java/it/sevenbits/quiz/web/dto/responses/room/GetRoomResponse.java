@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.web.dto.responses;
+package it.sevenbits.quiz.web.dto.responses.room;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.sevenbits.quiz.core.model.Player;
@@ -17,19 +17,25 @@ public class GetRoomResponse {
   private String roomName;
 
   @JsonProperty
+  private String ownerId;
+
+  @JsonProperty
   private List<Player> players;
 
   /**
    * constructor
    * @param roomId - String
    * @param roomName - String
+   * @param ownerId - String
    * @param players - List
    */
   public GetRoomResponse(@JsonProperty("roomId") final String roomId,
                          @JsonProperty("roomName") final String roomName,
+                         @JsonProperty("ownerId") final String ownerId,
                          @JsonProperty("players") final List<Player> players) {
     this.roomId = roomId;
     this.roomName = roomName;
+    this.ownerId = ownerId;
     this.players = players;
   }
 
@@ -39,6 +45,10 @@ public class GetRoomResponse {
 
   public String getRoomName() {
     return roomName;
+  }
+
+  public String getOwnerId() {
+    return ownerId;
   }
 
   public List<Player> getPlayers() {
