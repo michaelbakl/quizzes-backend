@@ -4,6 +4,17 @@ server:
 spring:
   datasource:
     driver-class-name: 'org.postgresql.Driver'
-    url: 'jdbc:postgresql://localhost:5432/seven_quizzes'
+    url: 'jdbc:postgresql://localhost:5433/seven_quizzes'
     username: 'seven_quizzes'
     password: 'seven_password'
+
+jwt:
+    issuer: 'michael.baklykov@7bits.it'
+    signingKey: 'talspoc120nxjsapqke1d77'
+    aTokenDuration: 30
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    it.sevenbits.quiz.web.security: DEBUG
