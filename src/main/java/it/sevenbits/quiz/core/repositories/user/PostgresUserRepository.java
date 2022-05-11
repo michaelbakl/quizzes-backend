@@ -26,7 +26,7 @@ public class PostgresUserRepository implements IUserRepository {
     return jdbcOperations.queryForObject("SELECT * FROM users WHERE email = ?",
             (resultSet, i) -> new User(resultSet.getString("userid"),
                     resultSet.getString("email"),
-                    getRoles(resultSet.getString("email")),
+                    getRoles(resultSet.getString("userid")),
                     resultSet.getString("password")), email);
   }
 
@@ -35,14 +35,14 @@ public class PostgresUserRepository implements IUserRepository {
     return jdbcOperations.query("SELECT * FROM users", (resultSet, i) ->
             new User(resultSet.getString("userid"),
                     resultSet.getString("email"),
-                    getRoles(resultSet.getString("email")),
+                    getRoles(resultSet.getString("userid")),
                     resultSet.getString("password")));
   }
 
   @Override
   public void createUser(final String userId, final String email, final String password) {
     jdbcOperations.update("INSERT INTO users VALUES (?, ?, ?)", userId, email, password);
-    jdbcOperations.update("INSERT INTO userroles VALUES (?, ?)", email, "USER");
+    jdbcOperations.update("INSERT INTO userroles VALUES (?, ?)", userId, "USER");
   }
 
   @Override
@@ -56,8 +56,8 @@ public class PostgresUserRepository implements IUserRepository {
     }
   }
 
-  private List<String> getRoles(final String email) {
-    return jdbcOperations.query("SELECT * FROM userroles WHERE email = ?",
-            (resultSet, i) -> resultSet.getString("role"), email);
+  private List<String> getRoles(final String userId) {
+    return jdbcOperations.query("SELECT * FROM userroles WHERE userid = ?",
+            (resultSet, i) -> resultSet.getString("role"), userId);
   }
 }

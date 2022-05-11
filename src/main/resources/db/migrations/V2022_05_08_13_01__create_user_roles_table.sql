@@ -1,7 +1,7 @@
 create table if not exists userRoles
 (
-    email text,
+    userId text,
     role     text,
-    PRIMARY KEY (email, role),
-    FOREIGN KEY (email) REFERENCES users (email)
+    PRIMARY KEY (userId, role),
+    FOREIGN KEY (userId) REFERENCES users (userid)
 );
