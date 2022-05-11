@@ -1,6 +1,7 @@
 package it.sevenbits.quiz.core.services.login;
 
 import it.sevenbits.quiz.core.exceptions.LoginFailedException;
+import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.exceptions.SignUpException;
 import it.sevenbits.quiz.core.model.User;
 import it.sevenbits.quiz.core.repositories.user.IUserRepository;
@@ -36,6 +37,9 @@ public class LoginService {
    * @return User class
    */
   public User login(final Login login) {
+    if (!users.checkLoginExists(login.getLogin())) {
+      throw new LoginFailedException("Incorrect login");
+    }
     User user = users.findByEmail(login.getLogin());
 
     if (user == null) {
