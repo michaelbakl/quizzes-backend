@@ -55,7 +55,7 @@ public class GameController {
             if (!isUUID(roomId)) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
             }
-            if (!userCredentials.getUsername().equals(gameService.getOwnerId(roomId))) {
+            if (!userCredentials.getUserId().equals(gameService.getOwnerId(roomId))) {
                 throw new QuizException(QuizErrorCode.NOT_AN_OWNER);
             }
             StartGameDtoResponse response = gameService.startGame(roomId);
@@ -116,7 +116,7 @@ public class GameController {
             }
             AnswerQuestionResponse response =
                     gameService.sendAnswer(roomId,
-                            userCredentials.getUsername(),
+                            userCredentials.getUserId(),
                             questionId,
                             answerQuestionRequest.getAnswerId());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);

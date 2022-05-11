@@ -13,26 +13,26 @@ import java.util.Set;
  */
 class UserCredentialsImpl implements UserCredentials {
 
-  @JsonProperty("username")
-  private final String username;
+  @JsonProperty("userId")
+  private final String userId;
 
   @JsonProperty("roles")
   private final Set<String> roles;
 
   /**
    * constructor
-   * @param username - username of user
+   * @param userId - username of user
    * @param roles - user`s roles
    */
   @SuppressWarnings("checkstyle:RedundantModifier")
   @JsonCreator
-  public UserCredentialsImpl(final String username, final Collection<String> roles) {
-    this.username = username;
+  public UserCredentialsImpl(final String userId, final Collection<String> roles) {
+    this.userId = userId;
     this.roles = Collections.unmodifiableSet(new LinkedHashSet<>(roles));
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserId() {
+    return userId;
   }
 
   public Set<String> getRoles() {

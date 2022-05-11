@@ -11,7 +11,7 @@ public interface UserCredentials {
    * returns username of user
    * @return username
    */
-  String getUsername();
+  String getUserId();
 
   /**
    * returns roles of user

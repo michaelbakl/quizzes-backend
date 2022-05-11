@@ -70,7 +70,7 @@ public class RoomController {
       GetRoomResponse response = roomService.createRoom(
               UUID.randomUUID().toString(),
               request.getRoomName(),
-              userCredentials.getUsername()
+              userCredentials.getUserId()
       );
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
@@ -114,7 +114,7 @@ public class RoomController {
       if (!isUUID(roomId)) {
         throw new QuizException(QuizErrorCode.WRONG_INPUTS);
       }
-      GetRoomResponse response = roomService.joinRoom(roomId, userCredentials.getUsername());
+      GetRoomResponse response = roomService.joinRoom(roomId, userCredentials.getUserId());
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);

@@ -59,7 +59,7 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
       final int seven = 7;
       String token = header.substring(seven);
       UserCredentials credentials = jwtService.parseToken(token);
-      logger.debug("Found credentials in Authorization header: {}", credentials.getUsername());
+      logger.debug("Found credentials in Authorization header: {}", credentials.getUserId());
       request.setAttribute(USER_CREDENTIALS, credentials);
       return credentials;
     } catch (Exception e) {
