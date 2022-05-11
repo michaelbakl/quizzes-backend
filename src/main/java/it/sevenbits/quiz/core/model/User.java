@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -9,36 +10,54 @@ import java.util.List;
  */
 public class User {
 
+  @JsonProperty("userId")
+  private String userId;
+
   @JsonProperty("email")
   private String email;
 
   @JsonProperty("roles")
   private List<String> roles;
 
-  //@JsonIgnore
-  @JsonProperty("password")
+  @JsonIgnore
   private String password;
 
+
   /**
-   * constructor
-   * @param email - email of user
+   * constructor without password
+   * @param userId - user id
+   * @param email - email
    * @param roles - user roles
    */
-  public User(final String email, final List<String> roles) {
+  public User(final String userId, final String email, final List<String> roles) {
+    this.userId = userId;
     this.email = email;
     this.roles = roles;
   }
 
   /**
-   * constructor
+   * constructor with password
+   * @param userId - user id
    * @param email - email
-   * @param password - password
-   * @param roles - list of roles
+   * @param roles - user roles
+   * @param password - user password
    */
-  public User(final String email, final String password, final List<String> roles) {
+  public User(final String userId,
+              final String email,
+              final List<String> roles,
+              final String password) {
+    this.userId = userId;
     this.email = email;
-    this.password = password;
     this.roles = roles;
+    this.password = password;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(final String userId) {
+    this.userId = userId;
   }
 
   public String getEmail() {

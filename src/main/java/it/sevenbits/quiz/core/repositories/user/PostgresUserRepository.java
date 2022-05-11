@@ -11,12 +11,6 @@ import java.util.List;
 public class PostgresUserRepository implements IUserRepository {
 
   private final JdbcOperations jdbcOperations;
-  @SuppressWarnings("checkstyle:MemberName")
-  private final String ROLE = "role";
-  @SuppressWarnings("checkstyle:MemberName")
-  private final String USERNAME = "username";
-  @SuppressWarnings("checkstyle:MemberName")
-  private final String PASSWORD = "password";
 
 
   /**
@@ -44,8 +38,8 @@ public class PostgresUserRepository implements IUserRepository {
   }
 
   @Override
-  public void createUser(final String email, final String password) {
-    jdbcOperations.update("INSERT INTO users VALUES (?, ?)", email, password);
+  public void createUser(final String userId, final String email, final String password) {
+    jdbcOperations.update("INSERT INTO users VALUES (?, ?, ?)", userId, email, password);
     jdbcOperations.update("INSERT INTO userroles VALUES (?, ?)", email, "USER");
   }
 

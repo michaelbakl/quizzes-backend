@@ -1,6 +1,7 @@
 create table if not exists users
 (
-    email text PRIMARY KEY,
-    password text,
+    userId text not null,
+    email text  not null PRIMARY KEY,
+    password text not null,
     enabled  boolean
 );

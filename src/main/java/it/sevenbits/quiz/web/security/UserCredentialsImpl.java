@@ -16,23 +16,32 @@ class UserCredentialsImpl implements UserCredentials {
   @JsonProperty("userId")
   private final String userId;
 
+  @JsonProperty("email")
+  private final String email;
+
   @JsonProperty("roles")
   private final Set<String> roles;
 
   /**
    * constructor
    * @param userId - username of user
+   * @param email - email
    * @param roles - user`s roles
    */
   @SuppressWarnings("checkstyle:RedundantModifier")
   @JsonCreator
-  public UserCredentialsImpl(final String userId, final Collection<String> roles) {
+  public UserCredentialsImpl(final String userId, final String email, final Collection<String> roles) {
     this.userId = userId;
+    this.email = email;
     this.roles = Collections.unmodifiableSet(new LinkedHashSet<>(roles));
   }
 
   public String getUserId() {
     return userId;
+  }
+
+  public String getEmail() {
+    return email;
   }
 
   public Set<String> getRoles() {

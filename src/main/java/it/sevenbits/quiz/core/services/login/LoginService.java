@@ -43,7 +43,7 @@ public class LoginService {
     if (!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
       throw new LoginFailedException("Wrong password");
     }
-    return new User(user.getEmail(), user.getRoles());
+    return new User(null, user.getEmail(), user.getRoles());
   }
 
   /**

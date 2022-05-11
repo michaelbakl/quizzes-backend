@@ -8,10 +8,16 @@ import java.util.Set;
 public interface UserCredentials {
 
   /**
-   * returns username of user
-   * @return username
+   * returns id of user
+   * @return userId
    */
   String getUserId();
+
+  /**
+   * returns user email
+   * @return email
+   */
+  String getEmail();
 
   /**
    * returns roles of user

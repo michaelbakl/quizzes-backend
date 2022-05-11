@@ -23,10 +23,11 @@ public interface IUserRepository {
 
   /**
    * create user with base roles
+   * @param userId - userId
    * @param email - email
    * @param password - password
    */
-  void createUser(String email, String password);
+  void createUser(String userId, String email, String password);
 
   /**
    * checks if login as email is taken

@@ -40,6 +40,7 @@ public class JsonWebTokenService implements JwtTokenService {
             .setIssuer(settings.getTokenIssuer())
             .setIssuedAt(Date.from(now))
             .setSubject(user.getEmail())
+            .setId(user.getUserId())
             .setExpiration(Date.from(now.plus(settings.getTokenExpiredIn())));
     claims.put(ROLES, user.getRoles());
 
@@ -58,9 +59,10 @@ public class JsonWebTokenService implements JwtTokenService {
     Jws<Claims> claims = Jwts.parser().setSigningKey(settings.getTokenSigningKey()).parseClaimsJws(token);
 
     String subject = claims.getBody().getSubject();
+    String id = claims.getBody().getId();
     List<String> roles = claims.getBody().get(ROLES, List.class);
 
-    return new UserCredentialsImpl(subject, Collections.unmodifiableList(roles));
+    return new UserCredentialsImpl(id, subject, Collections.unmodifiableList(roles));
   }
 
 }
