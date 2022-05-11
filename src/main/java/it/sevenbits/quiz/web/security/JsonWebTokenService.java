@@ -39,8 +39,8 @@ public class JsonWebTokenService implements JwtTokenService {
     Claims claims = Jwts.claims()
             .setIssuer(settings.getTokenIssuer())
             .setIssuedAt(Date.from(now))
-            .setSubject(user.getEmail())
             .setId(user.getUserId())
+            .setSubject(user.getEmail())
             .setExpiration(Date.from(now.plus(settings.getTokenExpiredIn())));
     claims.put(ROLES, user.getRoles());
 

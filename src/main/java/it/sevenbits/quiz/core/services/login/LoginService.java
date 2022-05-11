@@ -45,7 +45,7 @@ public class LoginService {
     if (!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
       throw new LoginFailedException("Wrong password");
     }
-    return new User(null, user.getEmail(), user.getRoles());
+    return new User(user.getUserId(), user.getEmail(), user.getRoles());
   }
 
   /**
