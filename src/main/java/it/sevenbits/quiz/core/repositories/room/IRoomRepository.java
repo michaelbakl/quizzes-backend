@@ -13,8 +13,9 @@ public interface IRoomRepository {
    *
    * @param roomId - String
    * @param roomName - String
+   * @param ownerId - owner id
    */
-  void createRoom(String roomId, String roomName);
+  void createRoom(String roomId, String roomName, String ownerId);
 
   /**
    * get all rooms method

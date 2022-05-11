@@ -22,13 +22,13 @@ public class PostgresRoomRepository implements IRoomRepository {
   }
 
   @Override
-  public void createRoom(final String roomId, final String roomName) {
+  public void createRoom(final String roomId, final String roomName, final String ownerId) {
     jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing ",
-              roomId, 0);
+              ownerId, 0);
     jdbcOperations.update("INSERT INTO room (roomid, roomname, ownerId) VALUES (?, ?, ?)",
-            roomId, roomName, roomId);
+            roomId, roomName, ownerId);
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
-            roomId, roomId);
+            roomId, ownerId);
   }
 
   @Override

@@ -23,7 +23,8 @@ public class RoomRepositoryTest {
   public void createRoom() {
     String roomId = "roomId";
     String roomName = "roomName";
-    repository.createRoom(roomId, roomName);
+    String ownerId = "ownerId";
+    repository.createRoom(roomId, roomName, ownerId);
     assertNotNull(repository.getRoomById(roomId));
     assertEquals(roomId, repository.getRoomById(roomId).getRoomId());
     assertEquals(roomName, repository.getRoomById(roomId).getRoomName());
@@ -31,8 +32,8 @@ public class RoomRepositoryTest {
 
   @Test
   public void getAllRooms() {
-    repository.createRoom("1", "1");
-    repository.createRoom("2", "2");
+    repository.createRoom("1", "1", "owner1");
+    repository.createRoom("2", "2", "owner2");
     List<Room> actualList = repository.getAllRooms();
     assertEquals(2, actualList.size());
     assertEquals("1", actualList.get(0).getRoomId());
@@ -44,7 +45,7 @@ public class RoomRepositoryTest {
 
   @Test
   public void getRoomById() {
-    repository.createRoom("1", "1");
+    repository.createRoom("1", "1", "owner1");
     Room actualRoom = repository.getRoomById("1");
     assertEquals("1", actualRoom.getRoomId());
     assertEquals("1", actualRoom.getRoomName());
@@ -52,7 +53,7 @@ public class RoomRepositoryTest {
 
   @Test
   public void addPlayer() {
-    repository.createRoom("1", "1");
+    repository.createRoom("1", "1", "owner1");
     repository.addPlayer("1", "Pl1");
     Player actual = repository.getRoomById("1").getPlayerById("Pl1");
     assertEquals("Pl1", actual.getPlayerId());
@@ -60,7 +61,7 @@ public class RoomRepositoryTest {
 
   @Test
   public void updatePlayerScore() {
-    repository.createRoom("1", "1");
+    repository.createRoom("1", "1", "owner1");
     repository.addPlayer("1", "Pl1");
     repository.updatePlayerScore("1", "Pl1", 10);
     Player actual = repository.getRoomById("1").getPlayerById("Pl1");

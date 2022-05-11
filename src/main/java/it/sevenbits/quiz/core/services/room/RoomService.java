@@ -30,12 +30,16 @@ public class RoomService implements IRoomService {
   }
 
   @Override
-  public GetRoomResponse createRoom(final String roomId, final String roomName) throws QuizException {
+  public GetRoomResponse createRoom(
+          final String roomId,
+          final String roomName,
+          final String ownerId
+  ) throws QuizException {
     if (roomId == null || roomName == null || roomId.equals("") || roomName.equals("")) {
       throw new QuizException(QuizErrorCode.WRONG_INPUTS);
     }
-    roomRepository.createRoom(roomId, roomName);
-    return new GetRoomResponse(roomId, roomName, roomId, roomRepository.getRoomById(roomId).getPlayers());
+    roomRepository.createRoom(roomId, roomName, ownerId);
+    return new GetRoomResponse(roomId, roomName, ownerId, roomRepository.getRoomById(roomId).getPlayers());
   }
 
   @Override

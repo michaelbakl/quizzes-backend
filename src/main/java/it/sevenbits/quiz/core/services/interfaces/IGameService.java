@@ -52,4 +52,11 @@ public interface IGameService {
    */
   boolean checkRoomIsInRepo(String roomId);
 
+  /**
+   * return i of owner of the room
+   * @param roomId - room id
+   * @return owner id
+   */
+  String getOwnerId(String roomId);
+
 }

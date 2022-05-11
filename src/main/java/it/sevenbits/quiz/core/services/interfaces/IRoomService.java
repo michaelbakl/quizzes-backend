@@ -20,10 +20,11 @@ public interface IRoomService {
    *
    * @param roomId - room id
    * @param roomName - room name
+   * @param ownerId - owner id
    * @return GetRoomResponse
    * * @throws QuizException - exception
    */
-  GetRoomResponse createRoom(String roomId, String roomName) throws QuizException;
+  GetRoomResponse createRoom(String roomId, String roomName, String ownerId) throws QuizException;
 
   /**
    * get room by id

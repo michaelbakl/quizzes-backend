@@ -44,10 +44,11 @@ public class RoomServiceTest {
     List<Player> mockList = mock(List.class);
     when(mockRoomRepository.getRoomById(anyString())).thenReturn(mockRoom);
     when(mockRoom.getPlayers()).thenReturn(mockList);
-    GetRoomResponse response = roomService.createRoom("1", "name");
+    GetRoomResponse response = roomService.createRoom("1", "name", "owner");
 
     assertEquals("1", response.getRoomId());
     assertEquals("name", response.getRoomName());
+    assertEquals("owner", response.getOwnerId());
     assertEquals(mockList, response.getPlayers());
   }
 

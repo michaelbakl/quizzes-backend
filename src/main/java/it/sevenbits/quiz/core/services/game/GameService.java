@@ -127,6 +127,11 @@ public class GameService implements IGameService {
         return roomRepository.checkRoomIsInRepository(roomId);
     }
 
+    @Override
+    public String getOwnerId(final String roomId) {
+        return roomRepository.getRoomById(roomId).getOwnerId();
+    }
+
     private boolean checkQuestionIsInRepo(final String questionId) {
         return questionRepository.checkQuestionExists(questionId);
     }

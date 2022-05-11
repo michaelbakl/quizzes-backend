@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.web.controllers;
 
+import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.quiz.web.dto.responses.room.GetRoomInfoResponse;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.UUID;
 
 /**
  * room controller class
@@ -64,8 +67,11 @@ public class RoomController {
           final UserCredentials userCredentials
   ) {
     try {
-      GetRoomResponse response =
-              roomService.createRoom(userCredentials.getUsername(), request.getRoomName());
+      GetRoomResponse response = roomService.createRoom(
+              UUID.randomUUID().toString(),
+              request.getRoomName(),
+              userCredentials.getUsername()
+      );
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -82,9 +88,9 @@ public class RoomController {
   @AuthRoleRequired("USER")
   ResponseEntity<GetRoomResponse> getRoom(@PathVariable("id") final String roomId) {
     try {
-//      if (!isUUID(roomId)) {
-//        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
-//      }
+      if (!isUUID(roomId)) {
+        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+      }
       GetRoomResponse response = roomService.getRoomById(roomId);
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
@@ -105,9 +111,9 @@ public class RoomController {
           final UserCredentials userCredentials
   ) {
     try {
-//      if (!isUUID(roomId)) {
-//        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
-//      }
+      if (!isUUID(roomId)) {
+        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+      }
       GetRoomResponse response = roomService.joinRoom(roomId, userCredentials.getUsername());
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
     } catch (QuizException e) {
@@ -128,6 +134,9 @@ public class RoomController {
           final UserCredentials userCredentials
   ) {
     try {
+      if (!isUUID(roomId)) {
+        throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+      }
       roomService.deleteRoom(roomId);
       return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Group deleted");
     } catch (QuizException e) {

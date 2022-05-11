@@ -52,7 +52,10 @@ public class GameController {
     ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId,
                                                    final UserCredentials userCredentials) {
         try {
-            if (!userCredentials.getUsername().equals(roomId)) {
+            if (!isUUID(roomId)) {
+                throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+            }
+            if (!userCredentials.getUsername().equals(gameService.getOwnerId(roomId))) {
                 throw new QuizException(QuizErrorCode.NOT_AN_OWNER);
             }
             StartGameDtoResponse response = gameService.startGame(roomId);
@@ -77,7 +80,7 @@ public class GameController {
             @PathVariable("questionId") final String questionId
     ) {
         try {
-            if (!isUUID(questionId)) {
+            if (!isUUID(roomId) || !isUUID(questionId)) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
             }
             GetQuestionResponse questionResponse = gameService.getQuestion(questionId);
@@ -105,7 +108,8 @@ public class GameController {
             final UserCredentials userCredentials
     ) {
         try {
-            if (!isUUID(questionId)
+            if (!isUUID(roomId)
+                    || !isUUID(questionId)
                     || !isUUID(answerQuestionRequest.getAnswerId())
             ) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
@@ -133,7 +137,7 @@ public class GameController {
             @PathVariable("roomId") final String roomId
     ) {
         try {
-            if (roomId == null || "".equals(roomId)) {
+            if (roomId == null || "".equals(roomId) || !isUUID(roomId)) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
             }
             GameStatusResponse gameStatusResponse = gameService.getGameStatus(roomId);
