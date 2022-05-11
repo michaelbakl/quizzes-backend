@@ -58,7 +58,7 @@ public class LoginService {
    * @throws SignUpException - exception
    */
   public void create(final Login login) throws SignUpException {
-    final int six = 6;
+    final int six = 1;
     final int twelve = 12;
     if (login == null
             || login.getLogin().length() < six
