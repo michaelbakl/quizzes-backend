@@ -44,5 +44,12 @@ public interface IRoomService {
    */
   GetRoomResponse joinRoom(String roomId, String playerId) throws QuizException;
 
+  /**
+   * delete room from repository
+   * @param roomId - room id
+   * @throws QuizException - exception
+   */
+  void deleteRoom(String roomId) throws QuizException;
+
 
 }

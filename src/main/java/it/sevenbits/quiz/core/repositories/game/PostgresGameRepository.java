@@ -88,10 +88,10 @@ public class PostgresGameRepository implements IGameRepository {
     List<String> questionsIds = game.getQuestionsIds();
     jdbcOperations.update("UPDATE game SET score = ?, questionsamount = ?, currentquestionid = ?, status = ? WHERE roomid = ?",
             game.getScore(), game.getQuestionsAmount(), game.getCurrentIdPos(), game.getStatus(), roomId);
-    for (String questionId: questionsIds) {
-      jdbcOperations.update("UPDATE questionstogame SET questionid = ? WHERE roomid = ?",
-              questionId, roomId);
-    }
+//    for (String questionId: questionsIds) {
+//      jdbcOperations.update("UPDATE questionstogame SET questionid = ? WHERE roomid = ? on conflict do nothing",
+//              questionId, roomId);
+//    }
   }
 
   private List<String> getQuestionIds(final String roomId) {

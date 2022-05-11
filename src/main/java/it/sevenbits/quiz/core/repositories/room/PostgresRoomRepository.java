@@ -66,8 +66,15 @@ public class PostgresRoomRepository implements IRoomRepository {
 
   @Override
   public void updatePlayerScore(final String roomId, final String playerId, final int score) {
+    int plScore = 0;
+    try {
+      plScore = jdbcOperations.queryForObject("SELECT points FROM player WHERE playerId = ?",
+              (resultSet, i) -> resultSet.getInt("points"), playerId);
+    } catch (NullPointerException e) {
+      e.getMessage();
+    }
     jdbcOperations.update("UPDATE player SET points = ? WHERE playerid = ?",
-            score, playerId);
+            score + plScore, playerId);
   }
 
   @Override
@@ -79,6 +86,11 @@ public class PostgresRoomRepository implements IRoomRepository {
     } catch (NullPointerException e) {
       return false;
     }
+  }
+
+  @Override
+  public void deleteRoom(final String roomId) {
+    jdbcOperations.update("DELETE FROM room WHERE roomid = ?", roomId);
   }
 
 

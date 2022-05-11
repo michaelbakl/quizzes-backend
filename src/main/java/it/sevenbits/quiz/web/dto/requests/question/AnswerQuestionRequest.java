@@ -8,24 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class AnswerQuestionRequest {
     @JsonProperty
-    private final String playerId;
-    @JsonProperty
     private final String answerId;
 
     /**
      *
-     * @param playerId - String
      * @param answerId - String
      */
     @JsonCreator
-    public AnswerQuestionRequest(@JsonProperty("playerId") final String playerId,
-                                 @JsonProperty("answerId") final String answerId) {
-        this.playerId = playerId;
+    public AnswerQuestionRequest(@JsonProperty("answerId") final String answerId) {
         this.answerId = answerId;
-    }
-
-    public String getPlayerId() {
-        return playerId;
     }
 
     public String getAnswerId() {

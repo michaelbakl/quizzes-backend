@@ -93,9 +93,13 @@ public class GameService implements IGameService {
             throw new QuizException(QuizErrorCode.ANSWER_DOES_NOT_MATCH_QUESTION);
         }
         int result = 0;
-        if (checkPlayerIsInRoom(roomId, playerId) && checkAnswerCorrect(currentQuestion, answerID)) {
+        Game currentGame = gameRepository.getGame(roomId);
+        currentGame.setStatus("In process");
+        if (checkAnswerCorrect(currentQuestion, answerID)) {
             result = currentQuestion.getCorrectAnswer().getPoints();
-            gameRepository.updateGameScore(result, roomId);
+            currentGame.setCurrentIdPos(currentGame.getCurrentIdPos() + 1);
+            currentGame.setScore(currentGame.getScore() + result);
+            gameRepository.updateGame(roomId, currentGame);
             roomRepository.updatePlayerScore(roomId, playerId, result);
         }
         return new AnswerQuestionResponse(
@@ -143,4 +147,7 @@ public class GameService implements IGameService {
         return gameRepository.checkGameIsInProgress(roomId);
     }
 
+    private boolean checkGameFinished(final Game game) {
+        return game.getCurrentIdPos() >= game.getQuestionsAmount();
+    }
 }

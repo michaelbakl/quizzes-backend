@@ -60,6 +60,15 @@ public class RoomService implements IRoomService {
             room.getPlayers());
   }
 
+  @Override
+  public void deleteRoom(final String roomId) throws QuizException {
+    if (checkRoomIsInRepo(roomId)) {
+      roomRepository.deleteRoom(roomId);
+    } else {
+      throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
+    }
+  }
+
   private boolean checkRoomIsInRepo(final String roomId) {
     return roomRepository.checkRoomIsInRepository(roomId);
   }

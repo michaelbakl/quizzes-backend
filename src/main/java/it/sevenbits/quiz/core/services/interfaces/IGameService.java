@@ -51,4 +51,5 @@ public interface IGameService {
    * @return true if room is in repo, false - otherwise
    */
   boolean checkRoomIsInRepo(String roomId);
+
 }

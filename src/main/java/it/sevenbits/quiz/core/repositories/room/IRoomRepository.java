@@ -50,4 +50,10 @@ public interface IRoomRepository {
    * @return true if room exists, false otherwise
    */
   boolean checkRoomIsInRepository(String roomId);
+
+  /**
+   * deletes the room
+   * @param roomId - room id
+   */
+  void deleteRoom(String roomId);
 }

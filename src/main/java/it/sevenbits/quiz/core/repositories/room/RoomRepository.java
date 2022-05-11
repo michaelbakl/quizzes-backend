@@ -55,5 +55,9 @@ public class RoomRepository implements IRoomRepository {
     return rooms.get(roomId) != null;
   }
 
+  @Override
+  public void deleteRoom(final String roomId) {
+  }
+
 
 }
