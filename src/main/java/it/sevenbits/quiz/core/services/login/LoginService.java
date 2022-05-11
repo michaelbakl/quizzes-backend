@@ -9,6 +9,8 @@ import it.sevenbits.quiz.web.model.Login;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 /**
  * login service
  */
@@ -63,7 +65,7 @@ public class LoginService {
     if (users.checkLoginExists(login.getLogin())) {
       throw new SignUpException("This login is taken: " + login.getLogin());
     }
-    users.createUser(login.getLogin(), BCrypt.hashpw(login.getPassword(), BCrypt.gensalt(twelve)));
+    users.createUser(UUID.randomUUID().toString(), login.getLogin(), BCrypt.hashpw(login.getPassword(), BCrypt.gensalt(twelve)));
   }
 
 
