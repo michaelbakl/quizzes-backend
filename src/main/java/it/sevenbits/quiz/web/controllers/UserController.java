@@ -45,7 +45,7 @@ public class UserController {
   @GetMapping(value = "/{id}")
   @ResponseBody
   @AuthRoleRequired("ADMIN")
-  public ResponseEntity<User> getUserInfo(final @PathVariable("id") String email) {
+  public ResponseEntity<User> getUserInfo(@PathVariable("id") final String email) {
     return Optional
             .ofNullable(userRepository.findByEmail(email))
             .map(user -> ResponseEntity.ok().body(user))

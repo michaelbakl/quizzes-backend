@@ -28,9 +28,8 @@ class UserCredentialsImpl implements UserCredentials {
    * @param email - email
    * @param roles - user`s roles
    */
-  @SuppressWarnings("checkstyle:RedundantModifier")
   @JsonCreator
-  public UserCredentialsImpl(final String userId, final String email, final Collection<String> roles) {
+  UserCredentialsImpl(final String userId, final String email, final Collection<String> roles) {
     this.userId = userId;
     this.email = email;
     this.roles = Collections.unmodifiableSet(new LinkedHashSet<>(roles));

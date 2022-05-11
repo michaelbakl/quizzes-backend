@@ -1,7 +1,6 @@
 package it.sevenbits.quiz.core.services.login;
 
 import it.sevenbits.quiz.core.exceptions.LoginFailedException;
-import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.exceptions.SignUpException;
 import it.sevenbits.quiz.core.model.User;
 import it.sevenbits.quiz.core.repositories.user.IUserRepository;

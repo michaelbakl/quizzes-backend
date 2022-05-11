@@ -24,9 +24,9 @@ public class UserCredentialsResolver implements HandlerMethodArgumentResolver {
 
   @Override
   public UserCredentials resolveArgument(
-          final @NonNull MethodParameter parameter,
+          @NonNull final MethodParameter parameter,
           final ModelAndViewContainer mavContainer,
-          final @NonNull NativeWebRequest webRequest,
+          @NonNull final NativeWebRequest webRequest,
           final WebDataBinderFactory binderFactory
   ) {
     try {

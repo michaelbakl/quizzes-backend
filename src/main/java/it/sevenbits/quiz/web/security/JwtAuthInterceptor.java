@@ -23,8 +23,7 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
   /**
    * define of user credentials
    */
-  @SuppressWarnings("checkstyle:StaticVariableName")
-  public static String USER_CREDENTIALS = "userCredentialsAttr";
+  public static final String USER_CREDENTIALS = "userCredentialsAttr";
 
   private final JwtTokenService jwtService;
 

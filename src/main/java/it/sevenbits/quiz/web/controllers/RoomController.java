@@ -2,7 +2,6 @@ package it.sevenbits.quiz.web.controllers;
 
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
-import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.services.interfaces.IRoomService;
 import it.sevenbits.quiz.web.dto.responses.room.GetRoomInfoResponse;
 import it.sevenbits.quiz.web.dto.responses.room.GetRoomResponse;
