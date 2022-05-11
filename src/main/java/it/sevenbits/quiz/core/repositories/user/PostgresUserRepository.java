@@ -24,17 +24,19 @@ public class PostgresUserRepository implements IUserRepository {
   @Override
   public User findByEmail(final String email) {
     return jdbcOperations.queryForObject("SELECT * FROM users WHERE email = ?",
-            (resultSet, i) -> new User(resultSet.getString("email"),
-                    resultSet.getString("password"),
-                    getRoles(resultSet.getString("email"))), email);
+            (resultSet, i) -> new User(resultSet.getString("userid"),
+                    resultSet.getString("email"),
+                    getRoles(resultSet.getString("email")),
+                    resultSet.getString("password")), email);
   }
 
   @Override
   public List<User> findAll() {
     return jdbcOperations.query("SELECT * FROM users", (resultSet, i) ->
-            new User(resultSet.getString("email"),
-                    resultSet.getString("password"),
-                    getRoles(resultSet.getString("email"))));
+            new User(resultSet.getString("userid"),
+                    resultSet.getString("email"),
+                    getRoles(resultSet.getString("email")),
+                    resultSet.getString("password")));
   }
 
   @Override
