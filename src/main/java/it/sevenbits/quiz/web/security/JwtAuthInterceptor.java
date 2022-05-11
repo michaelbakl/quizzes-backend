@@ -52,10 +52,12 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
 
   private UserCredentials getUserCredentials(final HttpServletRequest request) {
     try {
-      String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-      if (token == null) {
+      String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+      if (header == null) {
         return null;
       }
+      final int seven = 7;
+      String token = header.substring(seven);
       UserCredentials credentials = jwtService.parseToken(token);
       logger.debug("Found credentials in Authorization header: {}", credentials.getUsername());
       request.setAttribute(USER_CREDENTIALS, credentials);
