@@ -1,59 +1,54 @@
 package it.sevenbits.quiz.core.repositories;
 
 import it.sevenbits.quiz.core.model.Game;
+import it.sevenbits.quiz.core.repositories.interfaces.IGameRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * implementation of IGameRepository
  */
 @Repository
-public final class GameRepository implements IGameRepository {
-    private static GameRepository gameRepository;
-    private final Game game;
+public class GameRepository implements IGameRepository {
+    private final Map<String, Game> gameMap;
 
     /**
      * constructor
      */
-    @SuppressWarnings("checkstyle:MagicNumber")
-    private GameRepository() {
-        int ten = 2 + 2 + 2 + 2 + 2;
-        game = new Game(ten);
-    }
-
-    /**
-     * singlton method
-     * @return GameRepository
-     */
-    public static GameRepository getGameRepository() {
-        if (gameRepository == null) {
-            gameRepository = new GameRepository();
-        }
-        return gameRepository;
+    public GameRepository() {
+        gameMap = new HashMap<>();
     }
 
     @Override
-    public Game getGame() {
-        return game;
+    public Game getGame(final String roomId) {
+        return gameMap.get(roomId);
     }
 
     @Override
-    public void updateGameScore(final int score) {
-        game.setScore(game.getScore() + score);
+    public void createGame(final String roomId, final Game game) {
+        gameMap.put(roomId, game);
     }
 
     @Override
-    public int getGameScore() {
-        return game.getScore();
+    public void updateGameScore(final int score, final String roomId) {
+        gameMap.get(roomId).setScore(gameMap.get(roomId).getScore() + score);
     }
 
     @Override
-    public String getIdOfCurrentQuestion() {
-        return game.getCurrentQuestionId();
+    public int getGameScore(final String roomId) {
+        return gameMap.get(roomId).getScore();
     }
 
     @Override
-    public String getNextQuestionId() {
-        return game.getNextId();
+    public String getIdOfCurrentQuestion(final String roomId) {
+        return gameMap.get(roomId).getCurrentQuestionId();
+    }
+
+    @Override
+    public String getNextQuestionId(final String roomId) {
+        return gameMap.get(roomId).getNextId();
     }
 
 }

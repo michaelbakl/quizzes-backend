@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.core.repositories;
+package it.sevenbits.quiz.core.repositories.interfaces;
 
 import it.sevenbits.quiz.core.model.Question;
 
@@ -16,7 +16,7 @@ public interface IQuestionRepository {
     Question getQuestion(String id);
 
     /**
-     * gett for random question
+     * getter for random question
      * @return Question
      */
     Question getRandomQuestion();
