@@ -1,20 +1,21 @@
 server:
+  address: 127.0.0.1
   port: 8080
 
 spring:
+  profiles:
+    active: file-logging
   datasource:
     driver-class-name: 'org.postgresql.Driver'
     url: 'jdbc:postgresql://localhost:5432/seven_quizzes'
     username: 'seven_quizzes'
     password: 'seven_password'
 
-jwt:
-    issuer: 'michael.baklykov@7bits.it'
-    signingKey: 'talspoc120nxjsapqke1d77'
-    aTokenDuration: 30
+  logging:
+    file:
+      max-size: 512K
 
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    it.sevenbits.quiz.web.security: DEBUG
+jwt:
+  issuer: 'michael.baklykov@7bits.it'
+  signingKey: 'talspoc120nxjsapqke1d77'
+  aTokenDuration: 30
