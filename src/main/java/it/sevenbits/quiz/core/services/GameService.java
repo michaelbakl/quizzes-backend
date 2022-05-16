@@ -3,16 +3,16 @@ package it.sevenbits.quiz.core.services;
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.core.model.Answer;
-import it.sevenbits.quiz.core.repositories.interfaces.IGameRepository;
-import it.sevenbits.quiz.core.repositories.interfaces.IQuestionRepository;
-import it.sevenbits.quiz.core.repositories.interfaces.IRoomRepository;
+import it.sevenbits.quiz.core.repositories.game.IGameRepository;
+import it.sevenbits.quiz.core.repositories.question.IQuestionRepository;
+import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
-import it.sevenbits.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.web.dto.responses.GameStatusResponse;
-import it.sevenbits.web.dto.responses.GetQuestionResponse;
-import it.sevenbits.web.dto.responses.StartGameDtoResponse;
+import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -45,11 +45,14 @@ public class GameService implements IGameService {
         if (!checkRoomIsInRepo(roomId)) {
             throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
         }
-        final int ten = 10;
-        Game game = new Game(ten);
+        if (checkGameIsRunning(roomId)) {
+            throw new QuizException(QuizErrorCode.GAME_ALREADY_EXISTS);
+        }
+        final int three = 3;
+        Game game = new Game(three);
         game.setScore(0);
-        game.setQuestionsIds(questionRepository.getListOfRandomQuestionsIds(ten));
-        game.setQuestionsAmount(ten);
+        game.setQuestionsIds(questionRepository.getListOfRandomQuestionsIds(three));
+        game.setQuestionsAmount(three);
         game.setCurrentIdPos(0);
         game.setStatus("Started");
         gameRepository.createGame(roomId, game);
@@ -121,7 +124,7 @@ public class GameService implements IGameService {
     }
 
     private boolean checkQuestionIsInRepo(final String questionId) {
-        return questionRepository.getQuestion(questionId) != null;
+        return questionRepository.checkQuestionExists(questionId);
     }
 
     private boolean checkAnswerBelongsToAQuestion(final Question question, final String answerId) {
@@ -135,4 +138,9 @@ public class GameService implements IGameService {
     private boolean checkPlayerIsInRoom(final String roomId, final String playerId) {
         return roomRepository.getRoomById(roomId).getPlayerById(playerId) != null;
     }
+
+    private boolean checkGameIsRunning(final String roomId) {
+        return gameRepository.checkGameIsInProgress(roomId);
+    }
+
 }

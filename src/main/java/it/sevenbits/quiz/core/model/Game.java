@@ -41,6 +41,26 @@ public class Game {
         status = "new";
     }
 
+    /**
+     * constructor with all params
+     * @param score - game score
+     * @param questionsAmount - amount of questions
+     * @param questionsIds - list of questions ids in game
+     * @param currentIdPos - position of current question in list
+     * @param status - game status
+     */
+    public Game(final int score,
+                final int questionsAmount,
+                final List<String> questionsIds,
+                final int currentIdPos,
+                final String status) {
+        this.score = score;
+        this.questionsAmount = questionsAmount;
+        this.questionsIds = questionsIds;
+        this.currentIdPos = currentIdPos;
+        this.status = status;
+    }
+
     public int getScore() {
         return score;
     }
