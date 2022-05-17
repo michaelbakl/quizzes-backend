@@ -1,6 +1,7 @@
 package it.sevenbits.quiz.core.services.interfaces;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
+import it.sevenbits.quiz.web.dto.responses.game.GetRulesResponse;
 import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;
 import it.sevenbits.quiz.web.dto.responses.game.GameStatusResponse;
 import it.sevenbits.quiz.web.dto.responses.question.GetQuestionResponse;
@@ -58,5 +59,11 @@ public interface IGameService {
    * @return owner id
    */
   String getOwnerId(String roomId);
+
+  /**
+   * return game rules
+   * @return - response with game rules
+   */
+  GetRulesResponse getRules();
 
 }

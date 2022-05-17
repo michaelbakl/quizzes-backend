@@ -9,6 +9,7 @@ import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
 import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
+import it.sevenbits.quiz.web.dto.responses.game.GetRulesResponse;
 import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;
 import it.sevenbits.quiz.web.dto.responses.game.GameStatusResponse;
 import it.sevenbits.quiz.web.dto.responses.question.GetQuestionResponse;
@@ -130,6 +131,11 @@ public class GameService implements IGameService {
     @Override
     public String getOwnerId(final String roomId) {
         return roomRepository.getRoomById(roomId).getOwnerId();
+    }
+
+    @Override
+    public GetRulesResponse getRules() {
+        return new GetRulesResponse(gameRepository.getGameRules());
     }
 
     private boolean checkQuestionIsInRepo(final String questionId) {

@@ -71,6 +71,12 @@ public class PostgresGameRepository implements IGameRepository {
   }
 
   @Override
+  public String getGameRules() {
+    return jdbcOperations.queryForObject("SELECT rules FROM rules WHERE key=1",
+            (resultSet, i) -> resultSet.getString("rules"));
+  }
+
+  @Override
   public String getIdOfCurrentQuestion(final String roomId) {
     return jdbcOperations.queryForObject("SELECT currentquestionid FROM game WHERE roomId = ?",
             (resultSet, i) -> resultSet.getString("currentquestionid"),

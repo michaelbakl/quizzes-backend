@@ -60,4 +60,9 @@ public class GameRepository implements IGameRepository {
         return false;
     }
 
+    @Override
+    public String getGameRules() {
+        return "";
+    }
+
 }
