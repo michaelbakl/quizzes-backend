@@ -1,7 +1,7 @@
 package it.sevenbits.quiz.web.controllers;
 
 
-import it.sevenbits.quiz.core.services.interfaces.IGameService;
+import it.sevenbits.quiz.core.services.game.IGameService;
 import it.sevenbits.quiz.web.dto.responses.game.GetRulesResponse;
 import it.sevenbits.quiz.web.security.AuthRoleRequired;
 import org.springframework.http.HttpStatus;

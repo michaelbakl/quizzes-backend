@@ -1,5 +1,6 @@
 package it.sevenbits.quiz.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public class Room {
     this.roomId = roomId;
     this.roomName = roomName;
     this.ownerId = ownerId;
+    players = new ArrayList<>();
   }
 
   /**

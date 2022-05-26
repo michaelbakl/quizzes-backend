@@ -2,7 +2,7 @@ package it.sevenbits.quiz.web.controllers;
 
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
-import it.sevenbits.quiz.core.services.interfaces.IGameService;
+import it.sevenbits.quiz.core.services.game.IGameService;
 import it.sevenbits.quiz.web.dto.requests.question.AnswerQuestionRequest;
 import it.sevenbits.quiz.web.dto.responses.game.StartGameDtoResponse;
 import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;

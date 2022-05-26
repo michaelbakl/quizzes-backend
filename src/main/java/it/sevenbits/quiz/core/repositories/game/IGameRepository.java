@@ -62,5 +62,9 @@ public interface IGameRepository {
      */
     boolean checkGameIsInProgress(String roomId);
 
+    /**
+     * return game rules
+     * @return game rules : String
+     */
     String getGameRules();
 }

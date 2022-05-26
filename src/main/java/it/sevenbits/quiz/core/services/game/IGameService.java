@@ -1,4 +1,4 @@
-package it.sevenbits.quiz.core.services.interfaces;
+package it.sevenbits.quiz.core.services.game;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
 import it.sevenbits.quiz.web.dto.responses.game.GetRulesResponse;

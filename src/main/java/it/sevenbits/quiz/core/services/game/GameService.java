@@ -6,7 +6,6 @@ import it.sevenbits.quiz.core.model.Answer;
 import it.sevenbits.quiz.core.repositories.game.IGameRepository;
 import it.sevenbits.quiz.core.repositories.question.IQuestionRepository;
 import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
-import it.sevenbits.quiz.core.services.interfaces.IGameService;
 import it.sevenbits.quiz.core.model.Game;
 import it.sevenbits.quiz.core.model.Question;
 import it.sevenbits.quiz.web.dto.responses.game.GetRulesResponse;
@@ -95,18 +94,18 @@ public class GameService implements IGameService {
         }
         int result = 0;
         Game currentGame = gameRepository.getGame(roomId);
-        currentGame.setStatus("In process");
+        currentGame.setStatus("IN_PROCESS");
         if (checkAnswerCorrect(currentQuestion, answerID)) {
             result = currentQuestion.getCorrectAnswer().getPoints();
-            currentGame.setCurrentIdPos(currentGame.getCurrentIdPos() + 1);
             currentGame.setScore(currentGame.getScore() + result);
-            gameRepository.updateGame(roomId, currentGame);
             roomRepository.updatePlayerScore(roomId, playerId, result);
         }
+        String nextQuestionId = currentGame.getNextId();
+        gameRepository.updateGame(roomId, currentGame);
         return new AnswerQuestionResponse(
                 currentQuestion.getCorrectAnswer().getAnswerId(),
-                gameRepository.getNextQuestionId(roomId),
-                gameRepository.getGameScore(roomId),
+                nextQuestionId,
+                currentGame.getScore(),
                 result
         );
     }
@@ -114,10 +113,17 @@ public class GameService implements IGameService {
     @Override
     public GameStatusResponse getGameStatus(final String roomId) throws QuizException {
         if (checkRoomIsInRepo(roomId)) {
-            return new GameStatusResponse(gameRepository.getGame(roomId).getStatus(),
-                    gameRepository.getIdOfCurrentQuestion(roomId),
-                    gameRepository.getGame(roomId).getCurrentIdPos(),
-                    gameRepository.getGame(roomId).getQuestionsAmount());
+            Game game = gameRepository.getGame(roomId);
+            if (game == null) {
+                return new GameStatusResponse("NOT_CREATED",
+                        "0",
+                        0,
+                        0);
+            }
+            return new GameStatusResponse(game.getStatus(),
+                    game.getCurrentQuestionId(),
+                    game.getCurrentIdPos(),
+                    game.getQuestionsAmount());
         } else {
             throw new QuizException(QuizErrorCode.ROOM_NOT_FOUND);
         }

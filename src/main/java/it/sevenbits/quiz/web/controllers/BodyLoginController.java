@@ -38,15 +38,6 @@ public class BodyLoginController {
     this.tokenService = tokenService;
   }
 
-//  @RequestMapping(method = RequestMethod.POST)
-//  @ResponseBody
-//  public Token create(@RequestBody final Login login) {
-//    System.out.println("HELLO");
-//    User user = loginService.login(login);
-//    String token = tokenService.createToken(user);
-//    return new Token(token);
-//  }
-
   /**
    * logins user on server
    * @param login - sign in request

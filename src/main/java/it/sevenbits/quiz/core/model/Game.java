@@ -85,7 +85,14 @@ public class Game {
         this.questionsIds = questionsIds;
     }
 
+    /**
+     * returns current question id
+     * @return questionId
+     */
     public String getCurrentQuestionId() {
+        if (currentIdPos >= questionsIds.size()) {
+            return questionsIds.get(questionsIds.size() - 1);
+        }
         return questionsIds.get(currentIdPos);
     }
 
