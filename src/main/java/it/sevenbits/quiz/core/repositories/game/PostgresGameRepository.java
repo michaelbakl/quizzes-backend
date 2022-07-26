@@ -1,9 +1,9 @@
 package it.sevenbits.quiz.core.repositories.game;
 
 import it.sevenbits.quiz.core.model.Game;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +23,17 @@ public class PostgresGameRepository implements IGameRepository {
 
   @Override
   public Game getGame(final String roomId) {
-    return jdbcOperations.queryForObject("SELECT * FROM game WHERE roomId = ?", (resultSet, i) ->
-            new Game(resultSet.getInt("score"),
-                    resultSet.getInt("questionsAmount"),
-                    getQuestionIds(roomId),
-                    getPositionNumberInList(getQuestionIds(roomId), resultSet.getString("currentQuestionId")),
-                    resultSet.getString("status")
-            ), roomId);
+    try {
+      return jdbcOperations.queryForObject("SELECT * FROM game WHERE roomId = ?", (resultSet, i) ->
+              new Game(resultSet.getInt("score"),
+                      resultSet.getInt("questionsAmount"),
+                      getQuestionIds(roomId),
+                      getPositionNumberInList(getQuestionIds(roomId), resultSet.getString("currentQuestionId")),
+                      resultSet.getString("status")
+              ), roomId);
+    } catch (EmptyResultDataAccessException e) {
+      return null;
+    }
   }
 
   @Override
@@ -72,6 +76,12 @@ public class PostgresGameRepository implements IGameRepository {
   }
 
   @Override
+  public String getGameRules() {
+    return jdbcOperations.queryForObject("SELECT rules FROM rules WHERE key=1",
+            (resultSet, i) -> resultSet.getString("rules"));
+  }
+
+  @Override
   public String getIdOfCurrentQuestion(final String roomId) {
     return jdbcOperations.queryForObject("SELECT currentquestionid FROM game WHERE roomId = ?",
             (resultSet, i) -> resultSet.getString("currentquestionid"),
@@ -81,18 +91,20 @@ public class PostgresGameRepository implements IGameRepository {
   @Override
   public String getNextQuestionId(final String roomId) {
     Game game = getGame(roomId);
-    return game.getNextId();
+    String nextQuestionId = game.getNextId();
+    updateGame(roomId, game);
+    return nextQuestionId;
   }
 
   @Override
   public void updateGame(final String roomId, final Game game) {
     List<String> questionsIds = game.getQuestionsIds();
     jdbcOperations.update("UPDATE game SET score = ?, questionsamount = ?, currentquestionid = ?, status = ? WHERE roomid = ?",
-            game.getScore(), game.getQuestionsAmount(), game.getCurrentIdPos(), game.getStatus(), roomId);
-    for (String questionId: questionsIds) {
-      jdbcOperations.update("UPDATE questionstogame SET questionid = ? WHERE roomid = ?",
-              questionId, roomId);
-    }
+            game.getScore(), game.getQuestionsAmount(), game.getCurrentQuestionId(), game.getStatus(), roomId);
+//    for (String questionId: questionsIds) {
+//      jdbcOperations.update("UPDATE questionstogame SET questionid = ? WHERE roomid = ? on conflict do nothing",
+//              questionId, roomId);
+//    }
   }
 
   private List<String> getQuestionIds(final String roomId) {

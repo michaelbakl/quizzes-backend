@@ -9,20 +9,22 @@ import java.util.List;
 public class Room {
   private String roomId;
   private String roomName;
+
+  private String ownerId;
   private List<Player> players;
 
 
   /**
    * constructor
-   *
-   * @param roomId - String
-   * @param roomName - String
+   * @param roomId - room id
+   * @param roomName - room name
+   * @param ownerId - id of the owner of the room
    */
-  public Room(final String roomId, final String roomName) {
+  public Room(final String roomId, final String roomName, final String ownerId) {
     this.roomId = roomId;
     this.roomName = roomName;
+    this.ownerId = ownerId;
     players = new ArrayList<>();
-    players.add(new Player(roomId));
   }
 
   /**
@@ -30,11 +32,13 @@ public class Room {
    *
    * @param roomId - String
    * @param roomName - String
+   * @param ownerId - String
    * @param players - List
    */
-  public Room(final String roomId, final String roomName, final List<Player> players) {
+  public Room(final String roomId, final String roomName, final String ownerId, final List<Player> players) {
     this.roomId = roomId;
     this.roomName = roomName;
+    this.ownerId = ownerId;
     this.players = players;
   }
 
@@ -48,6 +52,14 @@ public class Room {
 
   public String getRoomName() {
     return roomName;
+  }
+
+  public String getOwnerId() {
+    return ownerId;
+  }
+
+  public void setOwnerId(final String ownerId) {
+    this.ownerId = ownerId;
   }
 
   public void setRoomName(final String roomName) {

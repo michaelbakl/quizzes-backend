@@ -31,7 +31,7 @@ public class MapQuestionRepository implements IQuestionRepository {
     }
 
     private void fillMapWithQuestionsForTest() {
-        int twenty = 2 * 2 * 2 * 2 + 2 + 2;
+        final int twenty = 20;
         for (int i = 0; i < twenty; i++) {
             List<Answer> list = new ArrayList<>();
             Answer correctAnswer = new Answer(String.valueOf(UUID.randomUUID()), "Answer1", 1);
@@ -77,7 +77,7 @@ public class MapQuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public boolean checkQuestionExists(String questionId) {
+    public boolean checkQuestionExists(final String questionId) {
         return false;
     }
 }

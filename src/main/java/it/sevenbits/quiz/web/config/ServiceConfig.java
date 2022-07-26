@@ -3,10 +3,13 @@ package it.sevenbits.quiz.web.config;
 import it.sevenbits.quiz.core.repositories.game.IGameRepository;
 import it.sevenbits.quiz.core.repositories.question.IQuestionRepository;
 import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
-import it.sevenbits.quiz.core.services.GameService;
-import it.sevenbits.quiz.core.services.RoomService;
-import it.sevenbits.quiz.core.services.interfaces.IGameService;
-import it.sevenbits.quiz.core.services.interfaces.IRoomService;
+import it.sevenbits.quiz.core.repositories.user.IUserRepository;
+import it.sevenbits.quiz.core.security.PasswordEncoder;
+import it.sevenbits.quiz.core.services.game.GameService;
+import it.sevenbits.quiz.core.services.room.RoomService;
+import it.sevenbits.quiz.core.services.game.IGameService;
+import it.sevenbits.quiz.core.services.room.IRoomService;
+import it.sevenbits.quiz.core.services.login.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,5 +40,17 @@ public class ServiceConfig {
     @Bean
     public IRoomService roomService(final IRoomRepository roomRepository) {
         return new RoomService(roomRepository);
+    }
+
+    /**
+     * bean for IUserService
+     * @param userRepository - user repo
+     * @param passwordEncoder - encoder for password
+     * @return implementation of interface IUserService
+     */
+    @Bean
+    public LoginService loginService(final IUserRepository userRepository,
+                                     final PasswordEncoder passwordEncoder) {
+        return new LoginService(userRepository, passwordEncoder);
     }
 }

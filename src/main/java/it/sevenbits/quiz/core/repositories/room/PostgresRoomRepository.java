@@ -22,20 +22,21 @@ public class PostgresRoomRepository implements IRoomRepository {
   }
 
   @Override
-  public void createRoom(final String roomId, final String roomName) {
+  public void createRoom(final String roomId, final String roomName, final String ownerId) {
     jdbcOperations.update("INSERT INTO player (playerid, points) VALUES (?, ?) on conflict do nothing ",
-              roomId, 0);
-    jdbcOperations.update("INSERT INTO room (roomid, roomname) VALUES (?, ?)",
-            roomId, roomName);
+              ownerId, 0);
+    jdbcOperations.update("INSERT INTO room (roomid, roomname, ownerId) VALUES (?, ?, ?)",
+            roomId, roomName, ownerId);
     jdbcOperations.update("INSERT INTO playersinroom (roomid, playerid) VALUES (?, ?)",
-            roomId, roomId);
+            roomId, ownerId);
   }
 
   @Override
   public List<Room> getAllRooms() {
     List<Room> rooms = jdbcOperations.query("SELECT * FROM room", (resultSet, i) ->
             new Room(resultSet.getString("roomid"),
-                    resultSet.getString("roomname")));
+                    resultSet.getString("roomname"),
+                    resultSet.getString("ownerid")));
     for (Room room: rooms) {
       room.setPlayers(getPlayersInRoom(room.getRoomId()));
     }
@@ -46,7 +47,8 @@ public class PostgresRoomRepository implements IRoomRepository {
   public Room getRoomById(final String roomId) {
     Room room = jdbcOperations.queryForObject("SELECT * FROM room WHERE roomId = ?", (resultSet, i) ->
             new Room(resultSet.getString("roomid"),
-                    resultSet.getString("roomname")), roomId);
+                    resultSet.getString("roomname"),
+                    resultSet.getString("ownerid")), roomId);
     assert room != null;
     List<Player> players = getPlayersInRoom(roomId);
     room.setPlayers(players);
@@ -64,8 +66,15 @@ public class PostgresRoomRepository implements IRoomRepository {
 
   @Override
   public void updatePlayerScore(final String roomId, final String playerId, final int score) {
+    int plScore = 0;
+    try {
+      plScore = jdbcOperations.queryForObject("SELECT points FROM player WHERE playerId = ?",
+              (resultSet, i) -> resultSet.getInt("points"), playerId);
+    } catch (NullPointerException e) {
+      e.getMessage();
+    }
     jdbcOperations.update("UPDATE player SET points = ? WHERE playerid = ?",
-            score, playerId);
+            score + plScore, playerId);
   }
 
   @Override
@@ -77,6 +86,11 @@ public class PostgresRoomRepository implements IRoomRepository {
     } catch (NullPointerException e) {
       return false;
     }
+  }
+
+  @Override
+  public void deleteRoom(final String roomId) {
+    jdbcOperations.update("DELETE FROM room WHERE roomid = ?", roomId);
   }
 
 

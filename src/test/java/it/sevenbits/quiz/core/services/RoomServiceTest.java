@@ -5,8 +5,9 @@ import it.sevenbits.quiz.core.model.Player;
 import it.sevenbits.quiz.core.model.Room;
 import it.sevenbits.quiz.core.repositories.room.RoomRepository;
 import it.sevenbits.quiz.core.repositories.room.IRoomRepository;
-import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
-import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.core.services.room.RoomService;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomsResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,10 +44,11 @@ public class RoomServiceTest {
     List<Player> mockList = mock(List.class);
     when(mockRoomRepository.getRoomById(anyString())).thenReturn(mockRoom);
     when(mockRoom.getPlayers()).thenReturn(mockList);
-    GetRoomResponse response = roomService.createRoom("1", "name");
+    GetRoomResponse response = roomService.createRoom("1", "name", "owner");
 
     assertEquals("1", response.getRoomId());
     assertEquals("name", response.getRoomName());
+    assertEquals("owner", response.getOwnerId());
     assertEquals(mockList, response.getPlayers());
   }
 

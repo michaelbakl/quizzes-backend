@@ -25,8 +25,8 @@ public class RoomRepository implements IRoomRepository {
   }
 
   @Override
-  public void createRoom(final String roomId, final String roomName) {
-    Room room = new Room(roomId, roomName);
+  public void createRoom(final String roomId, final String roomName, final String ownerId) {
+    Room room = new Room(roomId, roomName, ownerId);
     rooms.put(roomId, room);
   }
 
@@ -53,6 +53,10 @@ public class RoomRepository implements IRoomRepository {
  @Override
   public boolean checkRoomIsInRepository(final String roomId) {
     return rooms.get(roomId) != null;
+  }
+
+  @Override
+  public void deleteRoom(final String roomId) {
   }
 
 

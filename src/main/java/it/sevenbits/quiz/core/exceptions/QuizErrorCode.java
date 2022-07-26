@@ -21,7 +21,10 @@ public enum QuizErrorCode {
   ANSWER_DOES_NOT_MATCH_QUESTION("Answer does not belong to the question player tries to answer"),
   /**
    */
-  GAME_ALREADY_EXISTS("Game already exists in the room");
+  GAME_ALREADY_EXISTS("Game already exists in the room"),
+  /**
+   */
+  NOT_AN_OWNER("Only an owner of the room can start game in his room");
 
   private final String errorString;
 

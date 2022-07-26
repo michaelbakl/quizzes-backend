@@ -1,14 +1,14 @@
 package it.sevenbits.quiz.web.controllers;
 
 import it.sevenbits.quiz.core.exceptions.QuizException;
-import it.sevenbits.quiz.core.services.RoomService;
-import it.sevenbits.quiz.core.services.interfaces.IRoomService;
-import it.sevenbits.quiz.web.controllers.RoomController;
-import it.sevenbits.quiz.web.dto.requests.CreateRoomRequest;
-import it.sevenbits.quiz.web.dto.requests.JoinRoomRequest;
-import it.sevenbits.quiz.web.dto.responses.GetRoomInfoResponse;
-import it.sevenbits.quiz.web.dto.responses.GetRoomResponse;
-import it.sevenbits.quiz.web.dto.responses.GetRoomsResponse;
+import it.sevenbits.quiz.core.services.room.RoomService;
+import it.sevenbits.quiz.core.services.room.IRoomService;
+import it.sevenbits.quiz.web.dto.requests.room.CreateRoomRequest;
+import it.sevenbits.quiz.web.dto.requests.room.JoinRoomRequest;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomInfoResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomResponse;
+import it.sevenbits.quiz.web.dto.responses.room.GetRoomsResponse;
+import it.sevenbits.quiz.web.security.UserCredentials;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -48,11 +48,12 @@ public class RoomControllerTest {
   @Test
   public void createRoom() throws QuizException {
     GetRoomResponse mockResponse = mock(GetRoomResponse.class);
-    CreateRoomRequest request = new CreateRoomRequest("1", "1");
-    when(mockService.createRoom(anyString(), anyString())).thenReturn(mockResponse);
-
-    ResponseEntity<GetRoomResponse> answer = roomController.createRoom(request);
-    verify(mockService, times(1)).createRoom(anyString(), anyString());
+    UserCredentials mockUserInfo = mock(UserCredentials.class);
+    CreateRoomRequest request = new CreateRoomRequest("893c63cc-0afb-4e87-93b0-9a6284e44128");
+    when(mockService.createRoom(anyString(), anyString(), anyString())).thenReturn(mockResponse);
+    when(mockUserInfo.getUserId()).thenReturn("893c63cc-0afb-4e87-93b0-9a6284e44128");
+    ResponseEntity<GetRoomResponse> answer = roomController.createRoom(request, mockUserInfo);
+    verify(mockService, times(1)).createRoom(anyString(), anyString(), anyString());
     assertEquals(HttpStatus.OK, answer.getStatusCode());
     assertSame(mockResponse, answer.getBody());
   }
@@ -63,7 +64,7 @@ public class RoomControllerTest {
 
     when(mockService.getRoomById(anyString())).thenReturn(mockResponse);
 
-    ResponseEntity<GetRoomResponse> answer = roomController.getRoom("1");
+    ResponseEntity<GetRoomResponse> answer = roomController.getRoom("893c63cc-0afb-4e87-93b0-9a6284e44128");
     verify(mockService, times(1)).getRoomById(anyString());
     assertEquals(HttpStatus.OK, answer.getStatusCode());
     assertSame(mockResponse, answer.getBody());
@@ -74,9 +75,11 @@ public class RoomControllerTest {
   public void joinRoom() throws QuizException {
     GetRoomResponse mockResponse = mock(GetRoomResponse.class);
     JoinRoomRequest request = new JoinRoomRequest("1");
-
+    UserCredentials mockUserInfo = mock(UserCredentials.class);
     when(mockService.joinRoom(anyString(), anyString())).thenReturn(mockResponse);
-    ResponseEntity<GetRoomResponse> answer = roomController.joinRoom(request, "9");
+    when(mockUserInfo.getUserId()).thenReturn("893c63cc-0afb-4e87-93b0-9a6284e44128");
+
+    ResponseEntity<GetRoomResponse> answer = roomController.joinRoom("893c63cc-0afb-4e87-93b0-9a6284e44128", mockUserInfo);
     verify(mockService, times(1)).joinRoom(anyString(), anyString());
     assertEquals(HttpStatus.OK, answer.getStatusCode());
     assertSame(mockResponse, answer.getBody());

@@ -61,4 +61,10 @@ public interface IGameRepository {
      * @return true if game exists, false otherwise
      */
     boolean checkGameIsInProgress(String roomId);
+
+    /**
+     * return game rules
+     * @return game rules : String
+     */
+    String getGameRules();
 }

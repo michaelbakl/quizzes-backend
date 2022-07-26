@@ -2,12 +2,14 @@ package it.sevenbits.quiz.web.controllers;
 
 import it.sevenbits.quiz.core.exceptions.QuizErrorCode;
 import it.sevenbits.quiz.core.exceptions.QuizException;
-import it.sevenbits.quiz.core.services.interfaces.IGameService;
-import it.sevenbits.quiz.web.dto.requests.AnswerQuestionRequest;
-import it.sevenbits.quiz.web.dto.responses.StartGameDtoResponse;
-import it.sevenbits.quiz.web.dto.responses.AnswerQuestionResponse;
-import it.sevenbits.quiz.web.dto.responses.GameStatusResponse;
-import it.sevenbits.quiz.web.dto.responses.GetQuestionResponse;
+import it.sevenbits.quiz.core.services.game.IGameService;
+import it.sevenbits.quiz.web.dto.requests.question.AnswerQuestionRequest;
+import it.sevenbits.quiz.web.dto.responses.game.StartGameDtoResponse;
+import it.sevenbits.quiz.web.dto.responses.question.AnswerQuestionResponse;
+import it.sevenbits.quiz.web.dto.responses.game.GameStatusResponse;
+import it.sevenbits.quiz.web.dto.responses.question.GetQuestionResponse;
+import it.sevenbits.quiz.web.security.AuthRoleRequired;
+import it.sevenbits.quiz.web.security.UserCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -42,13 +44,19 @@ public class GameController {
     /**
      * starts game
      * @param roomId - String
+     * @param userCredentials - user info
      * @return StartGameDtoResponse
      */
     @RequestMapping(value = "/start", method = RequestMethod.POST)
-    ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId) {
+    @AuthRoleRequired("USER")
+    ResponseEntity<StartGameDtoResponse> startGame(@PathVariable("roomId") final String roomId,
+                                                   final UserCredentials userCredentials) {
         try {
             if (!isUUID(roomId)) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
+            }
+            if (!userCredentials.getUserId().equals(gameService.getOwnerId(roomId))) {
+                throw new QuizException(QuizErrorCode.NOT_AN_OWNER);
             }
             StartGameDtoResponse response = gameService.startGame(roomId);
             logger.info("Game started");
@@ -66,8 +74,11 @@ public class GameController {
      */
     @RequestMapping(value = "/question/{questionId}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<GetQuestionResponse> getQuestion(@PathVariable("roomId") final String roomId,
-                                                           @PathVariable("questionId") final String questionId) {
+    @AuthRoleRequired("USER")
+    public ResponseEntity<GetQuestionResponse> getQuestion(
+            @PathVariable("roomId") final String roomId,
+            @PathVariable("questionId") final String questionId
+    ) {
         try {
             if (!isUUID(roomId) || !isUUID(questionId)) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
@@ -84,30 +95,30 @@ public class GameController {
      * @param questionId - String
      * @param roomId - String
      * @param answerQuestionRequest - AnswerQuestionRequest
+     * @param userCredentials - user info
      * @return ResponseEntity
      */
     @RequestMapping(value = "/question/{questionId}/answer", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<AnswerQuestionResponse> sendAnswer(@RequestBody final AnswerQuestionRequest
-                                                                        answerQuestionRequest,
-                                                             @PathVariable("roomId") final String roomId,
-                                                             @PathVariable("questionId") final String questionId
-                                                            ) {
+    @AuthRoleRequired("USER")
+    public ResponseEntity<AnswerQuestionResponse> sendAnswer(
+            @RequestBody final AnswerQuestionRequest answerQuestionRequest,
+            @PathVariable("roomId") final String roomId,
+            @PathVariable("questionId") final String questionId,
+            final UserCredentials userCredentials
+    ) {
         try {
             if (!isUUID(roomId)
                     || !isUUID(questionId)
                     || !isUUID(answerQuestionRequest.getAnswerId())
-                    || !isUUID(answerQuestionRequest.getPlayerId())
             ) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
             }
             AnswerQuestionResponse response =
                     gameService.sendAnswer(roomId,
-                            answerQuestionRequest.getPlayerId(),
+                            userCredentials.getUserId(),
                             questionId,
                             answerQuestionRequest.getAnswerId());
-            logger.info("Answered: {}, {}, {}, {}", response.getCorrectAnswerId(),
-                    response.getQuestionId(), response.getQuestionScore(), response.getTotalScore());
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (QuizException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -121,9 +132,12 @@ public class GameController {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<GameStatusResponse> getGameStatus(@PathVariable("roomId") final String roomId) {
+    @AuthRoleRequired("USER")
+    public ResponseEntity<GameStatusResponse> getGameStatus(
+            @PathVariable("roomId") final String roomId
+    ) {
         try {
-            if (!isUUID(roomId)) {
+            if (roomId == null || "".equals(roomId) || !isUUID(roomId)) {
                 throw new QuizException(QuizErrorCode.WRONG_INPUTS);
             }
             GameStatusResponse gameStatusResponse = gameService.getGameStatus(roomId);
